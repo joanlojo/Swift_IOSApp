@@ -30,6 +30,10 @@ class GameScene: SKScene, ButtonDelegate {
     
     override func didMove(to view: SKView) {
         
+        if let difficulty = difficulty{
+            gameLogic.cards = gameLogic.getArrayofCards(difficulty: difficulty)
+            createImageCard(view: view, cards: gameLogic.cards)
+        }
         
         if difficulty == .easy{
             gameMode = SKLabelNode(fontNamed: "Futura")
@@ -37,13 +41,6 @@ class GameScene: SKScene, ButtonDelegate {
             gameMode.fontColor = UIColor.black
             gameMode.fontSize = 20
             gameMode.position = CGPoint(x: view.frame.width / 7 - gameMode.frame.width/2, y: view.frame.height * 0.9)
-            if let difficulty = difficulty{
-                gameLogic.cards = gameLogic.getArrayofCards(difficulty: difficulty)
-                createImageCard(view: view, cards: gameLogic.cards)
-            }
-            //addChild(<#T##node: SKNode##SKNode#>)
-            //carta
-            //createImageCard(view: view, cards: gameLogic.cards)
             
         }else if difficulty == .medium{
             gameMode = SKLabelNode(fontNamed: "Futura")
@@ -72,9 +69,41 @@ class GameScene: SKScene, ButtonDelegate {
         for i in 0..<cards.count / 2{
             let sprite = CardSprite(size: CGSize(width: 10, height:10), textureFront: SKTexture(imageNamed: cards[i].texturePathFront), textureBack: SKTexture(imageNamed: cards[i].texturePathFront))
             
-            sprite.position = CGPoint(x: view.frame.width/2, y: view.frame.height/2)
+            //sprite.position = CGPoint(x: 3 * (view.frame.width/4), y: view.frame.height/2)
+            
+            //sprite.setScale(15.0)
             cardSprite.append(sprite)
-            scene?.addChild(sprite)
+        }
+        setPositionCard(view: view)
+    }
+    
+    func setPositionCard(view: SKView){
+        for i in 0..<cardSprite.count{
+            
+            if difficulty == .easy{
+                if i < 2{
+                    cardSprite[i].position = CGPoint(x: 3 * (view.frame.width/4), y: CGFloat(i+1) * (view.frame.height / 5))
+                }else{
+                    cardSprite[i].position = CGPoint(x: (view.frame.width/4), y: CGFloat(i+1) * (view.frame.height / 5))
+                }
+                
+            }
+            else if difficulty == .medium{
+                if i < 4{
+                    cardSprite[i].position = CGPoint(x: 3 * (view.frame.width/4), y: CGFloat(i+1) * (view.frame.height / 5))
+                }else{
+                    cardSprite[i].position = CGPoint(x: (view.frame.width/4), y: CGFloat(i+1) * (view.frame.height / 5))
+                }
+            }
+            else if difficulty == .hard{
+                if i < 8{
+                    cardSprite[i].position = CGPoint(x: 3 * (view.frame.width/4), y: CGFloat(i+1) * (view.frame.height / 5))
+                }else{
+                    cardSprite[i].position = CGPoint(x: (view.frame.width/4), y: CGFloat(i+1) * (view.frame.height / 5))
+                }
+            }
+            cardSprite[i].setScale(15.0)
+             scene?.addChild(cardSprite[i])
         }
     }
     
