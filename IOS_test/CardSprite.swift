@@ -8,7 +8,14 @@
 
 import SpriteKit
 
+protocol CardDelegate: class {
+    func onTap(sender: CardSprite)
+}
+
 class CardSprite: SKSpriteNode {
+    
+    weak var delegate: CardDelegate?
+    
     var textureFront: SKTexture
     var textureBack: SKTexture
     
@@ -17,6 +24,7 @@ class CardSprite: SKSpriteNode {
         self.textureBack = textureBack
         super.init(texture: nil, color: .white, size: size)
         self.texture = textureBack
+        self.isUserInteractionEnabled = true
     }
     
     func showCard(){
@@ -27,15 +35,14 @@ class CardSprite: SKSpriteNode {
         fatalError()
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //let action = SKAction.scale(by: 0.9, duration: 0.1)
-        //run(action)
-        print("press")
-    }
-    
+
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //let action = SKAction.scale(by: 1.0/0.9, duration: 0.1)
-        //run(action)
-        print("notpress")
+        if let touch = touches.first, let parent = parent{
+            if frame.contains(touch.location(in: parent)){
+                if let delegate = delegate{
+                    delegate.onTap(sender: self)
+                }
+            }
+        }
     }
 }

@@ -12,8 +12,8 @@ protocol GameSceneDelegate: class {
     func back(sender: GameScene)
 }
 
-class GameScene: SKScene, ButtonDelegate {
-    
+class GameScene: SKScene, CardDelegate {
+   
     static let buttonWidth: CGFloat = 200.0
     static let buttonHeight: CGFloat = 50.0
     var gameMode: SKLabelNode!
@@ -57,22 +57,19 @@ class GameScene: SKScene, ButtonDelegate {
         }
         addChild(gameMode)
         
-        backButton.setText(text: "BACK")
+        /*backButton.setText(text: "BACK")
         backButton.fillColor = .red
         backButton.isUserInteractionEnabled = true
         backButton.delegate = self
         backButton.position = CGPoint(x: view.frame.width / 10.0 - backButton.frame.width/2, y: 100)
-        addChild(backButton)
+        addChild(backButton)*/
     }
     
     func createImageCard(view: SKView, cards: [Card]){
         for i in 0..<cards.count / 2{
             let sprite = CardSprite(size: CGSize(width: 10, height:10), textureFront: SKTexture(imageNamed: cards[i].texturePathFront), textureBack: SKTexture(imageNamed: cards[i].texturePathFront))
-            
-            //sprite.position = CGPoint(x: 3 * (view.frame.width/4), y: view.frame.height/2)
-            
-            //sprite.setScale(15.0)
             cardSprite.append(sprite)
+            cardSprite[i].delegate = self
         }
         setPositionCard(view: view)
     }
@@ -103,14 +100,18 @@ class GameScene: SKScene, ButtonDelegate {
                 }
             }
             cardSprite[i].setScale(15.0)
-             scene?.addChild(cardSprite[i])
+            scene?.addChild(cardSprite[i])
         }
     }
     
-    func onTap(sender: Button) {
+    /*func onTap(sender: Button) {
         if sender == backButton {
             gameSceneDelegate?.back(sender: self)
         }
+    }*/
+    
+    func onTap(sender: CardSprite) {
+        print("hola")
     }
     
 }
