@@ -8,14 +8,15 @@
 
 import SpriteKit
 
-protocol CardDelegate: class {
+protocol CardSpriteDelegate: class {
     func onTap(sender: CardSprite)
 }
 
 class CardSprite: SKSpriteNode {
     
-    weak var delegate: CardDelegate?
+    weak var delegate: CardSpriteDelegate?
     
+    var card: Card?
     var textureFront: SKTexture
     var textureBack: SKTexture
     

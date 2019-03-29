@@ -21,7 +21,7 @@ class Card{
         case destapada = 1
         case match = 2
     }
-    
+    //init(){}
     init (ID: Int, texturePathFront: String, texturePathBack: String, state: Int){
         self.texturePathFront = texturePathFront
         self.texturePathBack = texturePathBack
@@ -29,7 +29,5 @@ class Card{
         self.state = state
     }
     
-
-
-    
 }
+

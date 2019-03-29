@@ -12,12 +12,14 @@ protocol GameSceneDelegate: class {
     func back(sender: GameScene)
 }
 
-class GameScene: SKScene, CardDelegate {
+class GameScene: SKScene, CardSpriteDelegate{
    
     static let buttonWidth: CGFloat = 200.0
     static let buttonHeight: CGFloat = 50.0
     var gameMode: SKLabelNode!
     var cardSprite = [CardSprite]()
+    
+    //let card = [Card]()
     
     weak var gameSceneDelegate: GameSceneDelegate?
     
@@ -67,9 +69,10 @@ class GameScene: SKScene, CardDelegate {
     
     func createImageCard(view: SKView, cards: [Card]){
         for i in 0..<cards.count / 2{
-            let sprite = CardSprite(size: CGSize(width: 10, height:10), textureFront: SKTexture(imageNamed: cards[i].texturePathFront), textureBack: SKTexture(imageNamed: cards[i].texturePathFront))
+            let sprite = CardSprite(size: CGSize(width: 10, height:10), textureFront: SKTexture(imageNamed: cards[i].texturePathFront), textureBack: SKTexture(imageNamed: cards[i].texturePathBack))
             cardSprite.append(sprite)
             cardSprite[i].delegate = self
+            cardSprite[i].card = cards[i]
         }
         setPositionCard(view: view)
     }
@@ -111,7 +114,15 @@ class GameScene: SKScene, CardDelegate {
     }*/
     
     func onTap(sender: CardSprite) {
-        print("hola")
+        if sender.card?.state == 0{
+            sender.card?.state = 1
+            sender.texture = sender.textureFront
+            //print(sender.card?.ID)
+        }
+        else if sender.card?.state == 1{
+            sender.card?.state = 0
+            sender.texture = sender.textureBack
+        }
     }
     
 }
