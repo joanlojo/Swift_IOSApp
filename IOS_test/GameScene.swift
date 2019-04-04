@@ -137,24 +137,44 @@ class GameScene: SKScene, CardSpriteDelegate{
     func onTap(sender: CardSprite) {
         if let difficulty = difficulty{
             if let card = sender.card{
-                gameLogic.tryMatch(card: card, difficulty: difficulty)
+                if !gameLogic.tryMatch(card: card, difficulty: difficulty){
+                    if SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run{ in [self scene]
+                        if card.state == 1{
+                            sender.texture = sender.textureFront
+                            for i in 0..<cardSprite.count{
+                                if gameLogic.cardSelected?.ID == cardSprite[i].card?.ID{
+                                    if gameLogic.cardSelected?.state == 1{
+                                        cardSprite[i].texture = cardSprite[i].textureFront
+                                    }
+                                }
+                            }
+                            
+                        }else if card.state == 0{
+                            sender.texture = sender.textureBack
+                            for i in 0..<cardSprite.count{
+                                if gameLogic.cardSelected?.ID == cardSprite[i].card?.ID{
+                                    if gameLogic.cardSelected?.state == 0{
+                                        cardSprite[i].texture = cardSprite[i].textureBack
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else{
+                    if card.state == 2{
+                        sender.texture = sender.textureFront
+                        for i in 0..<cardSprite.count{
+                            if gameLogic.cardSelected?.ID == cardSprite[i].card?.ID{
+                                if gameLogic.cardSelected?.state == 2{
+                                    cardSprite[i].texture = cardSprite[i].textureFront
+                                }
+                            }
+                        }
+                }
             }
         }
-        if sender.card?.state == 1{
-            sender.texture = sender.textureFront
-        }else if sender.card?.state == 0{
-            sender.texture = sender.textureBack
-        }
         
-        /*if sender.card?.state == 0{
-            sender.card?.state = 1
-            sender.texture = sender.textureFront
-            //print(sender.card?.ID)
-        }
-        else if sender.card?.state == 1{
-            sender.card?.state = 0
-            sender.texture = sender.textureBack
-        }*/
     }
     
 }
