@@ -10,24 +10,25 @@ import SpriteKit
 
 protocol GameSceneDelegate: class {
     func back(sender: GameScene)
+    func gameToResult(sender: GameScene, points: Int)
 }
 
-class GameScene: SKScene, CardSpriteDelegate{
-   
+class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
+    
     static let buttonWidth: CGFloat = 200.0
     static let buttonHeight: CGFloat = 50.0
     var gameMode: SKLabelNode!
     var cardSprite = [CardSprite]()
     
-    //let card = [Card]()
+    var valuePoints: SKLabelNode!
+    var time: TimeInterval?
     
     weak var gameSceneDelegate: GameSceneDelegate?
     
     let gameLogic: GameLogic = GameLogic()
     private var label : SKLabelNode?
     
-    private var backButton = Button(rect: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight), cornerRadius: 10)
-    
+    private var backButton : Button?
     var difficulty: Difficulty?
     
     override func didMove(to view: SKView) {
@@ -36,35 +37,50 @@ class GameScene: SKScene, CardSpriteDelegate{
             gameLogic.cards = gameLogic.getArrayofCards(difficulty: difficulty)
             createImageCard(view: view, cards: gameLogic.cards)
         }
+        valuePoints = SKLabelNode(fontNamed: "Futura")
+        valuePoints.text = "Points: " + String(gameLogic.points)
+        valuePoints.fontColor = UIColor.black
+        valuePoints.fontSize = 20
+        valuePoints.position = CGPoint(x: view.frame.width/2, y: view.frame.height - 100)
+        
+        self.addChild(valuePoints)
         
         if difficulty == .easy{
             gameMode = SKLabelNode(fontNamed: "Futura")
             gameMode.text = "Easy"
             gameMode.fontColor = UIColor.black
             gameMode.fontSize = 20
-            gameMode.position = CGPoint(x: view.frame.width / 7 - gameMode.frame.width/2, y: view.frame.height * 0.9)
+            gameMode.position = CGPoint(x: view.frame.width / 2 - gameMode.frame.width/2, y: view.frame.height * 0.9)
             
         }else if difficulty == .medium{
             gameMode = SKLabelNode(fontNamed: "Futura")
             gameMode.text = "Medium"
             gameMode.fontColor = UIColor.black
             gameMode.fontSize = 20
-            gameMode.position = CGPoint(x: view.frame.width / 7 - gameMode.frame.width/2, y: view.frame.height * 0.9)
+            gameMode.position = CGPoint(x: view.frame.width / 2 - gameMode.frame.width/2, y: view.frame.height * 0.9)
         }else if difficulty == .hard{
             gameMode = SKLabelNode(fontNamed: "Futura")
             gameMode.text = "Hard"
             gameMode.fontColor = UIColor.black
             gameMode.fontSize = 20
-            gameMode.position = CGPoint(x: view.frame.width / 7 - gameMode.frame.width/2, y: view.frame.height * 0.9)
+            gameMode.position = CGPoint(x: view.frame.width / 2 - gameMode.frame.width/2, y: view.frame.height * 0.9)
         }
         addChild(gameMode)
         
-        /*backButton.setText(text: "BACK")
-        backButton.fillColor = .red
-        backButton.isUserInteractionEnabled = true
-        backButton.delegate = self
-        backButton.position = CGPoint(x: view.frame.width / 10.0 - backButton.frame.width/2, y: 100)
-        addChild(backButton)*/
+        //back button
+        let buttonWidth = view.frame.width / 6
+        let buttonHeight = buttonWidth / 2.0
+        backButton = Button(rect: CGRect(x: 0, y: 0 , width: buttonWidth, height: buttonHeight), cornerRadius: 10)
+        if let backButton = backButton{
+            backButton.setImage(imageNamed: "back")
+            backButton.fillColor = .clear
+            backButton.strokeColor = .clear
+            backButton.isUserInteractionEnabled = true
+            backButton.delegate = self
+            backButton.position = CGPoint(x: view.frame.width / 10.0 - backButton.frame.width/2, y: view.frame.height * 0.85)
+            addChild(backButton)
+        }
+        
     }
     
     func createImageCard(view: SKView, cards: [Card]){
@@ -128,54 +144,70 @@ class GameScene: SKScene, CardSpriteDelegate{
             scene?.addChild(cardSprite[i])
         }
     }
-    /*func onTap(sender: Button) {
-        if sender == backButton {
+    
+    func onTap(sender: Button) {
+        if sender == backButton{
             gameSceneDelegate?.back(sender: self)
         }
-    }*/
+    }
+    
+    
     
     func onTap(sender: CardSprite) {
-        if let difficulty = difficulty{
-            if let card = sender.card{
-                if !gameLogic.tryMatch(card: card, difficulty: difficulty){
-                    if SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run{ in [self scene]
-                        if card.state == 1{
-                            sender.texture = sender.textureFront
-                            for i in 0..<cardSprite.count{
-                                if gameLogic.cardSelected?.ID == cardSprite[i].card?.ID{
-                                    if gameLogic.cardSelected?.state == 1{
-                                        cardSprite[i].texture = cardSprite[i].textureFront
-                                    }
-                                }
+        if let card = sender.card{
+            if card.state != Card.CardState.destapada && card.state != Card.CardState.match{
+                gameLogic.tryMatch(card: card)
+                //if SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run{
+                if card.state == Card.CardState.destapada{
+                    sender.changeTexture(texture: sender.textureFront)
+                    for i in 0..<cardSprite.count{
+                        if gameLogic.cardSelected?.ID == cardSprite[i].card?.ID{
+                            if gameLogic.cardSelected?.state == Card.CardState.destapada{
+                                cardSprite[i].changeTexture(texture: sender.textureFront)
                             }
-                            
-                        }else if card.state == 0{
-                            sender.texture = sender.textureBack
-                            for i in 0..<cardSprite.count{
-                                if gameLogic.cardSelected?.ID == cardSprite[i].card?.ID{
-                                    if gameLogic.cardSelected?.state == 0{
-                                        cardSprite[i].texture = cardSprite[i].textureBack
-                                    }
-                                }
+                        }
+                    }
+                    
+                }else if card.state == Card.CardState.tapada{
+                    sender.changeTexture(texture: sender.textureBack)
+                    for i in 0..<cardSprite.count{
+                        if gameLogic.cardSelected?.ID == cardSprite[i].card?.ID{
+                            if gameLogic.cardSelected?.state == Card.CardState.tapada{
+                                cardSprite[i].changeTexture(texture: sender.textureBack)
                             }
                         }
                     }
                 }
-                else{
-                    if card.state == 2{
-                        sender.texture = sender.textureFront
-                        for i in 0..<cardSprite.count{
-                            if gameLogic.cardSelected?.ID == cardSprite[i].card?.ID{
-                                if gameLogic.cardSelected?.state == 2{
-                                    cardSprite[i].texture = cardSprite[i].textureFront
-                                }
+                // else{
+                if card.state == Card.CardState.match{
+                    valuePoints.text = "Points: " + String(gameLogic.points)
+                    sender.changeTexture(texture: sender.textureFront)
+                    for i in 0..<cardSprite.count{
+                        if gameLogic.cardSelected?.ID == cardSprite[i].card?.ID{
+                            if gameLogic.cardSelected?.state == Card.CardState.match{
+                                cardSprite[i].changeTexture(texture: sender.textureFront)
                             }
                         }
+                    }
                 }
             }
         }
-        
+        if gameLogic.checkGameState(cards: cardSprite){
+            print("ganas")
+            let wait = SKAction.wait(forDuration: 3)
+            
+            let sequence = SKAction.sequence([
+                wait,
+                SKAction.run {
+                    self.gameSceneDelegate?.gameToResult(sender: self, points: self.gameLogic.points)
+                }
+                ])
+            self.run(sequence)
+        }
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        //print(currentTime)
     }
     
 }
-

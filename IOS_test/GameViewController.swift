@@ -10,9 +10,29 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate {
+class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate, EndGameDelegate {
     
-
+    
+    
+    
+    
+    
+    func endGame(sender: GameScene) {
+        
+    }
+    
+    
+    func goToAbout(sender: MenuScene) {
+        
+    }
+    
+    func goToSettings(sender: MenuScene) {
+        
+    }
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,10 +42,10 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
             scene.menuSceneDelegate = self
             
             //if let scene = SKScene(fileNamed: "GameScene") {
-                // Set the scale mode to scale to fit the window
+            // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
-                
-                // Present the scene
+            
+            // Present the scene
             view.presentScene(scene)
             //}
             
@@ -35,16 +55,16 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
             view.showsNodeCount = true
         }
     }
-
+    
     override var shouldAutorotate: Bool {
         return false //false si no se rota en las dos direcciones
     }
-
+    
     override var supportedInterfaceOrientations:
         UIInterfaceOrientationMask{
-            return .portrait //si el juego es en portrait
-        }
-
+        return .portrait //si el juego es en portrait
+    }
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -61,17 +81,21 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
             // Present the scene
             view.presentScene(scene, transition: .crossFade(withDuration: 0.2))
         }
-
-    }
-    
-    func goToSettings(sender: MenuScene) {
         
     }
-
-    func goToAbout(sender: MenuScene) {
-
+    func gameToResult(sender: GameScene, points: Int) {
+        if let view = self.view as? SKView {
+            let scene = EndGameScene(size: view.frame.size)
+            scene.pointsLastGame = points
+            scene.endGameDelegate = self
+            // Set the scale mode to scale to fit the window
+            scene.scaleMode = .aspectFill
+            
+            // Present the scene
+            view.presentScene(scene, transition: .crossFade(withDuration: 0.2))
+        }
     }
-
+    
     func back(sender: GameScene) {
         if let view = self.view as? SKView {
             let scene = MenuScene(size: view.frame.size)
@@ -82,5 +106,21 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
             // Present the scene
             view.presentScene(scene, transition: .crossFade(withDuration: 0.2))
         }
+    }
+    func resultToMenu(sender: EndGameScene) {
+        if let view = self.view as? SKView {
+            let scene = MenuScene(size: view.frame.size)
+            scene.menuSceneDelegate = self
+            // Set the scale mode to scale to fit the window
+            scene.scaleMode = .aspectFill
+            
+            // Present the scene
+            view.presentScene(scene, transition: .crossFade(withDuration: 0.2))
+        }
+    }
+    
+    
+    func gameToResult(sender: EndGameScene) {
+        
     }
 }

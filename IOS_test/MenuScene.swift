@@ -16,9 +16,9 @@ protocol MenuSceneDelegate: class {
 }
 
 class MenuScene: SKScene, ButtonDelegate {
-
+    
     weak var menuSceneDelegate: MenuSceneDelegate?
-
+    
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     var logo : SKSpriteNode?
@@ -30,7 +30,7 @@ class MenuScene: SKScene, ButtonDelegate {
     private var options: Button?
     
     override func didMove(to view: SKView) {
-      
+        
         let buttonWidth = view.frame.width / 1.8
         let buttonHeight = buttonWidth / 4.5
         
@@ -157,7 +157,7 @@ class MenuScene: SKScene, ButtonDelegate {
             }
         }
         else if sender == hard{
-           // print("hard")
+            // print("hard")
             if let menuSceneDelegate = menuSceneDelegate {
                 menuSceneDelegate.goToGame(sender: self, difficulty: .hard)
             }

@@ -56,7 +56,7 @@ class Button: SKShapeNode {
         if let highlightColor = highlightColor {
             originalColor = fillColor
             fillColor = highlightColor
-           
+            
         }
         if let highlightStroke = highlightStroke{
             originalColorStroke = strokeColor

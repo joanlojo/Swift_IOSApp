@@ -11,23 +11,26 @@ import UIKit
 class Card{
     
     let ID: Int
+    let idPair: Int
     let texturePathFront: String
     let texturePathBack: String
     
-    var state: Int
+    var state: CardState
     
-    enum CardState: Int{
-        case tapada = 0
-        case destapada = 1
-        case match = 2
+    enum CardState{
+        case tapada
+        case destapada
+        case match
     }
     //init(){}
-    init (ID: Int, texturePathFront: String, texturePathBack: String, state: Int){
+    init (ID: Int, idPair: Int,  texturePathFront: String, texturePathBack: String, state: CardState){
         self.texturePathFront = texturePathFront
         self.texturePathBack = texturePathBack
         self.ID = ID
+        self.idPair = idPair
         self.state = state
     }
     
 }
+
 

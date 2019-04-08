@@ -9,20 +9,21 @@
 import UIKit
 
 enum Difficulty: Int{
-    case easy = 8
-    case medium = 16
-    case hard = 24
+    case easy = 12
+    case medium = 20
+    case hard = 30
 }
 
 
 class GameLogic {
     
     var points: Int
+    let valuePoints = 50
     var cards = [Card]()
     var cardSelected: Card?
     var isMatchReady: Bool?
     let difficulty: Int
-    let namePathFront = ["pogba", "pogba", "pogba", "pogba", "pogba", "pogba", "pogba", "pogba", "pogba", "pogba", "pogba"] //nombre de todas las caras
+    let namePathFront = ["pogba", "cr", "grizi", "rash", "messi", "ibra", "pique", "ramos", "bape", "rak", "ney"] //nombre de todas las caras
     let namePathBack = ["campo"]
     
     init (){
@@ -30,71 +31,56 @@ class GameLogic {
         self.points = 0
         self.difficulty = 0
     }
-    
-    /*func getArrayofCards(difficulty: Difficulty) -> [Card]{
-        cards = [Card]()
-        let textureNameFront = namePathFront.randomElement()!
-        let textureNameBack = namePathBack.randomElement()!
-        for i in 0..<difficulty.rawValue / 2{
-            let card1 = Card(ID: i, texturePathFront: textureNameFront, texturePathBack: textureNameBack, state: 0)
-            let card2 = Card(ID: i + difficulty.rawValue / 2, texturePathFront: textureNameFront, texturePathBack: textureNameBack, state: 0)
-            cards.append(card1)
-            cards.append(card2)
-        }
-        return cards.shuffled()
-    }*/
     func getArrayofCards( difficulty: Difficulty) -> [Card]{
         cards = [Card]()
         let texturesPathFrontShuffled = namePathFront.shuffled()
         for i in 0..<difficulty.rawValue / 2{
             let textureNameFront = texturesPathFrontShuffled[i]
             let textureNameBack = namePathBack.randomElement()!
-            let card1 = Card(ID: i, texturePathFront: textureNameFront, texturePathBack: textureNameBack, state: 0)
-            let card2 = Card(ID: i + difficulty.rawValue / 2, texturePathFront: textureNameFront, texturePathBack: textureNameBack, state: 0)
+            let card1 = Card(ID: i, idPair: i,  texturePathFront: textureNameFront, texturePathBack: textureNameBack, state: Card.CardState.tapada)
+            let card2 = Card(ID: i + difficulty.rawValue, idPair: i, texturePathFront: textureNameFront, texturePathBack: textureNameBack, state: Card.CardState.tapada)
             cards.append(card1)
             cards.append(card2)
         }
         return cards.shuffled()
     }
-    func changeState(){
-        
+    
+    func checkGameState(cards: [CardSprite]) -> Bool{
+        for i in 0..<cards.count{
+            if cards[i].card?.state != Card.CardState.match{
+                //print("ganas")
+                return false
+            }
+        }
+        return true
     }
     
-    func tryMatch(card: Card, difficulty: Difficulty) -> Bool{
-        if card.state == 1{
-            card.state = 0
-            //cardSelected = card
-            //cardSprite.texture = cardSprite.textureFront
-        }else if card.state == 0{
-            card.state = 1
-            //cardSprite.texture = cardSprite.textureBack
-        }
-        if isMatchReady == true{
+    func tryMatch(card: Card){
+        card.state = Card.CardState.destapada
+        if isMatchReady == true && card.state == Card.CardState.destapada && cardSelected?.state == Card.CardState.destapada{
             if let cardSelected = cardSelected{
-                if card.state == 1 && cardSelected.state == 1{
-                    if cardSelected.ID == abs(card.ID - difficulty.rawValue / 2) {
-                        cardSelected.state = 2
-                        card.state = 2
-                        print("match")
-                        return true
-                    }else{
-                        cardSelected.state = 0
-                        card.state = 0
-                    }
+                if cardSelected.idPair == card.idPair{
+                    cardSelected.state = Card.CardState.match
+                    card.state = Card.CardState.match
+                    points += valuePoints
+                    print("match")
+                    //return true
+                }else{
+                    cardSelected.state = Card.CardState.tapada
+                    card.state = Card.CardState.tapada
                 }
-                print(abs(card.ID - difficulty.rawValue / 2))
-                print(cardSelected.ID)
+                isMatchReady = false
             }
-            isMatchReady = false
+            
         }else{
-            cardSelected = card
+            self.cardSelected = card
+            self.cardSelected?.state = Card.CardState.destapada
             isMatchReady = true
         }
-         return false
     }
     
     func reset(){
-       
+        
     }
     
     func update(){
