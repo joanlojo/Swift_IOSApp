@@ -33,10 +33,14 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
     var difficulty: Difficulty?
     
     override func didMove(to view: SKView) {
+        //
+        
         //seleccionar las cartas para pasarlas a la funcion para asignarle la imagen
         if let difficulty = difficulty{
             gameLogic.cards = gameLogic.getArrayofCards(difficulty: difficulty)
             createImageCard(view: view, cards: gameLogic.cards)
+            //definir el tiempo de cada nivel
+            gameLogic.changeTime(difficulty: difficulty)
         }
         
         timeLabel = SKLabelNode(fontNamed: "Futura")
@@ -222,7 +226,7 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
     
     override func update(_ currentTime: TimeInterval) {
         gameLogic.getFirstTime(time: currentTime)
-        gameLogic.time = gameLogic.timeMax - (currentTime - gameLogic.initTime)
+        gameLogic.time = gameLogic.maxTime - (currentTime - gameLogic.initTime)
         timeLabel.text = "Time: " + String(Int(gameLogic.time))
         
         if Int(gameLogic.time) <= 0{
