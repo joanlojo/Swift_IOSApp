@@ -22,6 +22,7 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
     
     var valuePoints: SKLabelNode!
     var timeLabel: SKLabelNode!
+    var comboLabel: SKLabelNode!
     var currentTime: TimeInterval?
     
     weak var gameSceneDelegate: GameSceneDelegate?
@@ -33,7 +34,7 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
     var difficulty: Difficulty?
     
     override func didMove(to view: SKView) {
-        //
+     
         
         //seleccionar las cartas para pasarlas a la funcion para asignarle la imagen
         if let difficulty = difficulty{
@@ -43,13 +44,34 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
             gameLogic.changeTime(difficulty: difficulty)
         }
         
+        for i in 0..<cardSprite.count{
+            let wait = SKAction.wait(forDuration: 2)
+            let sequence = SKAction.sequence([
+                wait,
+                SKAction.run {
+                    self.cardSprite[i].card?.state = Card.CardState.tapada
+                    self.cardSprite[i].changeTexture(texture: self.cardSprite[i].textureBack)
+                }
+                ])
+            self.run(sequence)
+            //cardSprite[i].card?.state = Card.CardState.tapada
+            //cardSprite[i].changeTexture(texture: cardSprite[i].textureBack)
+        }
+        
+        //inicializar el mensaje de combo
+        comboLabel = SKLabelNode(fontNamed: "Futura")
+        //comboLabel.text = "Combo: 0 "
+        comboLabel.fontColor = UIColor.red
+        comboLabel.fontSize = 20
+        comboLabel.position = CGPoint(x: view.frame.width / 2, y: view.frame.height * 0.8)
+        self.addChild(comboLabel)
+        
+        //inicializar el mensaje de tiempo para mostarlo
         timeLabel = SKLabelNode(fontNamed: "Futura")
-        //if let time = gameLogic.time{
         timeLabel.text = "Time: 0 "
-        //}
         timeLabel.fontColor = UIColor.black
         timeLabel.fontSize = 20
-        timeLabel.position = CGPoint(x: 0.8 * (view.frame.width), y: view.frame.height - 100)
+        timeLabel.position = CGPoint(x: 0.8 * (view.frame.width), y: view.frame.height * 0.85)
         self.addChild(timeLabel)
         
         //mostrar los puntos por pantalla
@@ -57,29 +79,28 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
         valuePoints.text = "Points: " + String(gameLogic.points)
         valuePoints.fontColor = UIColor.black
         valuePoints.fontSize = 20
-        valuePoints.position = CGPoint(x: view.frame.width/2, y: view.frame.height - 100)
+        valuePoints.position = CGPoint(x: view.frame.width/2, y: view.frame.height * 0.85)
         self.addChild(valuePoints)
-        
         
         if difficulty == .easy{
             gameMode = SKLabelNode(fontNamed: "Futura")
-            gameMode.text = "Easy"
+            gameMode.text = "EASY"
             gameMode.fontColor = UIColor.black
             gameMode.fontSize = 20
-            gameMode.position = CGPoint(x: 0.3 * (view.frame.width / 2), y: view.frame.height * 0.9)
+            gameMode.position = CGPoint(x: 0.4 * (view.frame.width / 2), y: view.frame.height * 0.85)
             
         }else if difficulty == .medium{
             gameMode = SKLabelNode(fontNamed: "Futura")
-            gameMode.text = "Medium"
+            gameMode.text = "MEDIUM"
             gameMode.fontColor = UIColor.black
             gameMode.fontSize = 20
-            gameMode.position = CGPoint(x: 0.3 * (view.frame.width / 2), y: view.frame.height * 0.9)
+            gameMode.position = CGPoint(x: 0.4 * (view.frame.width / 2), y: view.frame.height * 0.85)
         }else if difficulty == .hard{
             gameMode = SKLabelNode(fontNamed: "Futura")
-            gameMode.text = "Hard"
+            gameMode.text = "HARD"
             gameMode.fontColor = UIColor.black
             gameMode.fontSize = 20
-            gameMode.position = CGPoint(x: 0.3 * (view.frame.width / 2), y: view.frame.height * 0.9)
+            gameMode.position = CGPoint(x: 0.4 * (view.frame.width / 2), y: view.frame.height * 0.85)
         }
         addChild(gameMode)
         
@@ -93,7 +114,7 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
             backButton.strokeColor = .clear
             backButton.isUserInteractionEnabled = true
             backButton.delegate = self
-            backButton.position = CGPoint(x: view.frame.width / 10.0 - backButton.frame.width/2, y: view.frame.height * 0.85)
+            backButton.position = CGPoint(x: view.frame.width / 9.0 - backButton.frame.width/2, y: view.frame.height * 0.9)
             addChild(backButton)
         }
         
@@ -225,6 +246,10 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
     }
     
     override func update(_ currentTime: TimeInterval) {
+        if gameLogic.combos >= 2{
+            comboLabel.text = "Combo x" + String(gameLogic.combos)
+        }
+        
         gameLogic.getFirstTime(time: currentTime)
         gameLogic.time = gameLogic.maxTime - (currentTime - gameLogic.initTime)
         timeLabel.text = "Time: " + String(Int(gameLogic.time))

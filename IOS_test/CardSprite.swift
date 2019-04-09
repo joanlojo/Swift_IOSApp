@@ -24,7 +24,7 @@ class CardSprite: SKSpriteNode {
         self.textureFront = textureFront
         self.textureBack = textureBack
         super.init(texture: nil, color: .white, size: size)
-        self.texture = textureBack
+        self.texture = textureFront
         self.isUserInteractionEnabled = true
     }
     

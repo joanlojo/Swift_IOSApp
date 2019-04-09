@@ -13,8 +13,6 @@ enum Difficulty: Int{
     case medium = 20
     case hard = 30
 }
-
-
 class GameLogic {
     
     var points: Int
@@ -44,14 +42,14 @@ class GameLogic {
         for i in 0..<difficulty.rawValue / 2{
             let textureNameFront = texturesPathFrontShuffled[i]
             let textureNameBack = namePathBack.randomElement()!
-            let card1 = Card(ID: i, idPair: i,  texturePathFront: textureNameFront, texturePathBack: textureNameBack, state: Card.CardState.tapada)
-            let card2 = Card(ID: i + difficulty.rawValue, idPair: i, texturePathFront: textureNameFront, texturePathBack: textureNameBack, state: Card.CardState.tapada)
+            let card1 = Card(ID: i, idPair: i,  texturePathFront: textureNameFront, texturePathBack: textureNameBack, state: Card.CardState.destapada)
+            let card2 = Card(ID: i + difficulty.rawValue, idPair: i, texturePathFront: textureNameFront, texturePathBack: textureNameBack, state: Card.CardState.destapada)
             cards.append(card1)
             cards.append(card2)
         }
         return cards.shuffled()
     }
-    
+    // cambiar el tiempo de cada nivel de dificultad
     func changeTime(difficulty: Difficulty){
         if difficulty == .easy{
             maxTime = 100
@@ -74,14 +72,12 @@ class GameLogic {
         }
         return true
     }
-    
+    //asignar el tiempo inicial cuando entras a la escena por primera vez
     func getFirstTime(time: TimeInterval){
         if !isFirstTime{
             initTime = time
             isFirstTime = true
-
         }
-        
     }
     
     //funcion para detectar si las dos cartas que seleccionas son las mismas o no y cambiar si estado en funcion de ello
@@ -92,16 +88,14 @@ class GameLogic {
                 if cardSelected.idPair == card.idPair{
                     cardSelected.state = Card.CardState.match
                     card.state = Card.CardState.match
+                    //Combos
                     combos += 1
                     if combos >= 2{
                         valuePoints = combos * valuePoints
                     }
                     points += valuePoints
-                    
-                    print(valuePoints)
-                    print(combos)
-
-                    //return true
+                    //print(valuePoints)
+                    //print(combos)
                 }else{
                     combos = 0
                     valuePoints = 50
