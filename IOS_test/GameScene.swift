@@ -21,7 +21,8 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
     var cardSprite = [CardSprite]()
     
     var valuePoints: SKLabelNode!
-    var time: TimeInterval?
+    var timeLabel: SKLabelNode!
+    var currentTime: TimeInterval?
     
     weak var gameSceneDelegate: GameSceneDelegate?
     
@@ -32,38 +33,49 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
     var difficulty: Difficulty?
     
     override func didMove(to view: SKView) {
-        
+        //seleccionar las cartas para pasarlas a la funcion para asignarle la imagen
         if let difficulty = difficulty{
             gameLogic.cards = gameLogic.getArrayofCards(difficulty: difficulty)
             createImageCard(view: view, cards: gameLogic.cards)
         }
+        
+        timeLabel = SKLabelNode(fontNamed: "Futura")
+        //if let time = gameLogic.time{
+        timeLabel.text = "Time: 0 "
+        //}
+        timeLabel.fontColor = UIColor.black
+        timeLabel.fontSize = 20
+        timeLabel.position = CGPoint(x: 0.8 * (view.frame.width), y: view.frame.height - 100)
+        self.addChild(timeLabel)
+        
+        //mostrar los puntos por pantalla
         valuePoints = SKLabelNode(fontNamed: "Futura")
         valuePoints.text = "Points: " + String(gameLogic.points)
         valuePoints.fontColor = UIColor.black
         valuePoints.fontSize = 20
         valuePoints.position = CGPoint(x: view.frame.width/2, y: view.frame.height - 100)
-        
         self.addChild(valuePoints)
+        
         
         if difficulty == .easy{
             gameMode = SKLabelNode(fontNamed: "Futura")
             gameMode.text = "Easy"
             gameMode.fontColor = UIColor.black
             gameMode.fontSize = 20
-            gameMode.position = CGPoint(x: view.frame.width / 2 - gameMode.frame.width/2, y: view.frame.height * 0.9)
+            gameMode.position = CGPoint(x: 0.3 * (view.frame.width / 2), y: view.frame.height * 0.9)
             
         }else if difficulty == .medium{
             gameMode = SKLabelNode(fontNamed: "Futura")
             gameMode.text = "Medium"
             gameMode.fontColor = UIColor.black
             gameMode.fontSize = 20
-            gameMode.position = CGPoint(x: view.frame.width / 2 - gameMode.frame.width/2, y: view.frame.height * 0.9)
+            gameMode.position = CGPoint(x: 0.3 * (view.frame.width / 2), y: view.frame.height * 0.9)
         }else if difficulty == .hard{
             gameMode = SKLabelNode(fontNamed: "Futura")
             gameMode.text = "Hard"
             gameMode.fontColor = UIColor.black
             gameMode.fontSize = 20
-            gameMode.position = CGPoint(x: view.frame.width / 2 - gameMode.frame.width/2, y: view.frame.height * 0.9)
+            gameMode.position = CGPoint(x: 0.3 * (view.frame.width / 2), y: view.frame.height * 0.9)
         }
         addChild(gameMode)
         
@@ -82,7 +94,7 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
         }
         
     }
-    
+    //asignar la imagen a la carta
     func createImageCard(view: SKView, cards: [Card]){
         for i in 0..<cards.count{
             let sprite = CardSprite(size: CGSize(width: 10, height:10), textureFront: SKTexture(imageNamed: cards[i].texturePathFront), textureBack: SKTexture(imageNamed: cards[i].texturePathBack))
@@ -93,6 +105,7 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
         setPositionCard(view: view)
     }
     
+    //posicionar las cartas en funcion del grado de dificultad y la cantidad
     func setPositionCard(view: SKView){
         for i in 0..<cardSprite.count{
             if difficulty == .easy{
@@ -144,7 +157,7 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
             scene?.addChild(cardSprite[i])
         }
     }
-    
+    //funcion para volver al menu principal
     func onTap(sender: Button) {
         if sender == backButton{
             gameSceneDelegate?.back(sender: self)
@@ -152,7 +165,7 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
     }
     
     
-    
+    //enviar la carta para comprobar la logica y cambiar las texturas a corde con el estado de la carta
     func onTap(sender: CardSprite) {
         if let card = sender.card{
             if card.state != Card.CardState.destapada && card.state != Card.CardState.match{
@@ -180,6 +193,7 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
                 }
                 // else{
                 if card.state == Card.CardState.match{
+                    //para que se actualizen los puntos durante la partida
                     valuePoints.text = "Points: " + String(gameLogic.points)
                     sender.changeTexture(texture: sender.textureFront)
                     for i in 0..<cardSprite.count{
@@ -192,10 +206,10 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
                 }
             }
         }
+        //cargar la escena del final de la partida
         if gameLogic.checkGameState(cards: cardSprite){
             print("ganas")
-            let wait = SKAction.wait(forDuration: 3)
-            
+            let wait = SKAction.wait(forDuration: 1)
             let sequence = SKAction.sequence([
                 wait,
                 SKAction.run {
@@ -207,7 +221,20 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
     }
     
     override func update(_ currentTime: TimeInterval) {
-        //print(currentTime)
+        gameLogic.getFirstTime(time: currentTime)
+        gameLogic.time = gameLogic.timeMax - (currentTime - gameLogic.initTime)
+        timeLabel.text = "Time: " + String(Int(gameLogic.time))
+        
+        if Int(gameLogic.time) <= 0{
+            let wait = SKAction.wait(forDuration: 1)
+            let sequence = SKAction.sequence([
+                wait,
+                SKAction.run {
+                    self.gameSceneDelegate?.gameToResult(sender: self, points: self.gameLogic.points)
+                }
+                ])
+            self.run(sequence)
+        }
     }
     
 }

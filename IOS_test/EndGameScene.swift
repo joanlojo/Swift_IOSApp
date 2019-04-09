@@ -22,18 +22,16 @@ class EndGameScene: SKScene, ButtonDelegate {
     var pointsLastGame = 0
     
     var highScoreLabel: SKLabelNode?
+    var endGameLabel: SKLabelNode?
     var highScore: Int = 0
     
     override func didMove(to view: SKView) {
-        
         backgroundColor = SKColor(named: "Fondo")!
-        
         //ratios
         let widthRatio = frame.width / 2
         let heightRatio = widthRatio / 4.1
         
-        
-        
+        //mostar los puntos de la partida
         self.points = SKLabelNode(text: "Points: " + String(pointsLastGame))
         if let points = self.points {
             points.fontColor = .black
@@ -43,6 +41,7 @@ class EndGameScene: SKScene, ButtonDelegate {
             points.position = CGPoint(x: (view.frame.width / 2), y: view.frame.height/2)
             addChild(points)
         }
+        //mostrar el high score, demomento no esta la logica
         self.highScoreLabel = SKLabelNode(text: "High Score: " + String(highScore))
         if let highScoreLabel = self.highScoreLabel {
             highScoreLabel.fontColor = .black
@@ -52,9 +51,17 @@ class EndGameScene: SKScene, ButtonDelegate {
             highScoreLabel.position = CGPoint(x: (view.frame.width / 2), y: view.frame.height * 0.40)
             addChild(highScoreLabel)
         }
+        self.endGameLabel = SKLabelNode(text: "You have finished the game!")
+        if let endGameLabel = self.endGameLabel{
+            endGameLabel.fontColor = .red
+            endGameLabel.verticalAlignmentMode = .center
+            endGameLabel.fontSize = 25
+            endGameLabel.fontName = "Futura"
+            endGameLabel.position = CGPoint(x: (view.frame.width / 2), y: view.frame.height * 0.70)
+            addChild(endGameLabel)
+        }
         
-        
-        //game button
+        //boton para volver al menu inicial
         backButton = Button(rect: CGRect(x: 0, y: 0, width: widthRatio, height: heightRatio), cornerRadius: heightRatio / 2)
         if let backButton = backButton{
             backButton.strokeColor = .clear

@@ -20,7 +20,12 @@ class GameLogic {
     var points: Int
     let valuePoints = 50
     var cards = [Card]()
+    var time: TimeInterval = 90
+    var timeMax: TimeInterval = 10
+    var initTime: TimeInterval = 0
+    var isFirstTime: Bool = false
     var cardSelected: Card?
+    
     var isMatchReady: Bool?
     let difficulty: Int
     let namePathFront = ["pogba", "cr", "grizi", "rash", "messi", "ibra", "pique", "ramos", "bape", "rak", "ney"] //nombre de todas las caras
@@ -31,6 +36,7 @@ class GameLogic {
         self.points = 0
         self.difficulty = 0
     }
+    //crear el array de cartas en funcion de la dificultad
     func getArrayofCards( difficulty: Difficulty) -> [Card]{
         cards = [Card]()
         let texturesPathFrontShuffled = namePathFront.shuffled()
@@ -45,6 +51,7 @@ class GameLogic {
         return cards.shuffled()
     }
     
+    //funcion para determinar si todas las cartas estan destapadas con exito --> has ganado el nivel
     func checkGameState(cards: [CardSprite]) -> Bool{
         for i in 0..<cards.count{
             if cards[i].card?.state != Card.CardState.match{
@@ -55,6 +62,16 @@ class GameLogic {
         return true
     }
     
+    func getFirstTime(time: TimeInterval){
+        if !isFirstTime{
+            initTime = time
+            isFirstTime = true
+
+        }
+        
+    }
+    
+    //funcion para detectar si las dos cartas que seleccionas son las mismas o no y cambiar si estado en funcion de ello
     func tryMatch(card: Card){
         card.state = Card.CardState.destapada
         if isMatchReady == true && card.state == Card.CardState.destapada && cardSelected?.state == Card.CardState.destapada{

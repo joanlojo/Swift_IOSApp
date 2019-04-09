@@ -22,7 +22,7 @@ class Card{
         case destapada
         case match
     }
-    //init(){}
+    //inicializar la carta
     init (ID: Int, idPair: Int,  texturePathFront: String, texturePathBack: String, state: CardState){
         self.texturePathFront = texturePathFront
         self.texturePathBack = texturePathBack
