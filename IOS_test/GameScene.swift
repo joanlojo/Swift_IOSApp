@@ -194,41 +194,54 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
     func onTap(sender: CardSprite) {
         if let card = sender.card{
             if card.state != Card.CardState.destapada && card.state != Card.CardState.match{
+                //cualquier carta que seleccionas la giras
+                card.state = Card.CardState.destapada
+                sender.changeTexture(texture: sender.textureFront)
+                
                 gameLogic.tryMatch(card: card)
+                //secuencia para la animacion de la carta
+                let wait = SKAction.wait(forDuration: 0.5)
+                let sequence = SKAction.sequence([
+                    wait,
+                    SKAction.run {
+                        if card.state == Card.CardState.destapada{
+                            sender.changeTexture(texture: sender.textureFront)
+                            for i in 0..<self.cardSprite.count{
+                                if self.gameLogic.cardSelected?.ID == self.cardSprite[i].card?.ID{
+                                    if self.gameLogic.cardSelected?.state == Card.CardState.destapada{
+                                        //self.cardSprite[i].changeTexture(texture: sender.textureFront)
+                                    }
+                                }
+                            }
+                            
+                        }else if card.state == Card.CardState.tapada{
+                            sender.changeTexture(texture: sender.textureBack)
+                            for i in 0..<self.cardSprite.count{
+                                if self.gameLogic.cardSelected?.ID == self.cardSprite[i].card?.ID{
+                                    if self.gameLogic.cardSelected?.state == Card.CardState.tapada{
+                                        self.cardSprite[i].changeTexture(texture: sender.textureBack)
+                                    }
+                                }
+                            }
+                        }
+                        // else{
+                        if card.state == Card.CardState.match{
+                            //para que se actualizen los puntos durante la partida
+                            self.valuePoints.text = "Points: " + String(self.gameLogic.points)
+                            sender.changeTexture(texture: sender.textureFront)
+                            for i in 0..<self.cardSprite.count{
+                                if self.gameLogic.cardSelected?.ID == self.cardSprite[i].card?.ID{
+                                    if self.gameLogic.cardSelected?.state == Card.CardState.match{
+                                        //self.cardSprite[i].changeTexture(texture: sender.textureFront)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    ])
+                self.run(sequence)
                 //if SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run{
-                if card.state == Card.CardState.destapada{
-                    sender.changeTexture(texture: sender.textureFront)
-                    for i in 0..<cardSprite.count{
-                        if gameLogic.cardSelected?.ID == cardSprite[i].card?.ID{
-                            if gameLogic.cardSelected?.state == Card.CardState.destapada{
-                                cardSprite[i].changeTexture(texture: sender.textureFront)
-                            }
-                        }
-                    }
-                    
-                }else if card.state == Card.CardState.tapada{
-                    sender.changeTexture(texture: sender.textureBack)
-                    for i in 0..<cardSprite.count{
-                        if gameLogic.cardSelected?.ID == cardSprite[i].card?.ID{
-                            if gameLogic.cardSelected?.state == Card.CardState.tapada{
-                                cardSprite[i].changeTexture(texture: sender.textureBack)
-                            }
-                        }
-                    }
-                }
-                // else{
-                if card.state == Card.CardState.match{
-                    //para que se actualizen los puntos durante la partida
-                    valuePoints.text = "Points: " + String(gameLogic.points)
-                    sender.changeTexture(texture: sender.textureFront)
-                    for i in 0..<cardSprite.count{
-                        if gameLogic.cardSelected?.ID == cardSprite[i].card?.ID{
-                            if gameLogic.cardSelected?.state == Card.CardState.match{
-                                cardSprite[i].changeTexture(texture: sender.textureFront)
-                            }
-                        }
-                    }
-                }
+              
             }
         }
         //cargar la escena del final de la partida

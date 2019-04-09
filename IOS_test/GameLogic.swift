@@ -82,7 +82,7 @@ class GameLogic {
     
     //funcion para detectar si las dos cartas que seleccionas son las mismas o no y cambiar si estado en funcion de ello
     func tryMatch(card: Card){
-        card.state = Card.CardState.destapada
+        //card.state = Card.CardState.destapada
         if isMatchReady == true && card.state == Card.CardState.destapada && cardSelected?.state == Card.CardState.destapada{
             if let cardSelected = cardSelected{
                 if cardSelected.idPair == card.idPair{
