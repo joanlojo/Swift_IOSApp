@@ -109,7 +109,7 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
         let buttonHeight = buttonWidth / 2.0
         backButton = Button(rect: CGRect(x: 0, y: 0 , width: buttonWidth, height: buttonHeight), cornerRadius: 10)
         if let backButton = backButton{
-            backButton.setImage(imageNamed: "back")
+            backButton.setImage(imageNamed: "back", scale: 0.07)
             backButton.fillColor = .clear
             backButton.strokeColor = .clear
             backButton.isUserInteractionEnabled = true

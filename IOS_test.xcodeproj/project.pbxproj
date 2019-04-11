@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A3426B79225F6A4F00FCB1E8 /* OptionsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3426B78225F6A4F00FCB1E8 /* OptionsScene.swift */; };
 		A35C8C20225B8943007F0EF6 /* EndGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35C8C1F225B8943007F0EF6 /* EndGameScene.swift */; };
 		A508BEAF22314E3B001692FD /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = A508BEAE22314E3B001692FD /* Button.swift */; };
 		A562028C223BDBEA00E371E0 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A562028B223BDBEA00E371E0 /* GameScene.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A3426B78225F6A4F00FCB1E8 /* OptionsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsScene.swift; sourceTree = "<group>"; };
 		A35C8C1F225B8943007F0EF6 /* EndGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndGameScene.swift; sourceTree = "<group>"; };
 		A508BEAE22314E3B001692FD /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		A562028B223BDBEA00E371E0 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				A5AE39FB2243C9A700695F1D /* GameLogic.swift */,
 				A5AE39FD2243CAEA00695F1D /* CardSprite.swift */,
 				A35C8C1F225B8943007F0EF6 /* EndGameScene.swift */,
+				A3426B78225F6A4F00FCB1E8 /* OptionsScene.swift */,
 			);
 			path = IOS_test;
 			sourceTree = "<group>";
@@ -167,6 +170,7 @@
 				A56E8E582216F2EE006D4DF5 /* MenuScene.swift in Sources */,
 				A5AE39FA2243C64B00695F1D /* Card.swift in Sources */,
 				A56E8E5A2216F2EE006D4DF5 /* GameViewController.swift in Sources */,
+				A3426B79225F6A4F00FCB1E8 /* OptionsScene.swift in Sources */,
 				A56E8E522216F2EE006D4DF5 /* AppDelegate.swift in Sources */,
 				A5AE39FE2243CAEA00695F1D /* CardSprite.swift in Sources */,
 				A508BEAF22314E3B001692FD /* Button.swift in Sources */,

@@ -10,12 +10,8 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate, EndGameDelegate {
-    
-    
-    
-    
-    
+class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate, EndGameDelegate, OptionsDelegate {
+
     
     func endGame(sender: GameScene) {
         
@@ -27,7 +23,14 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
     }
     
     func goToSettings(sender: MenuScene) {
-        
+        if let view = self.view as? SKView {
+            let scene = OptionsScene(size: view.frame.size)
+            scene.optionsDelegate = self
+            // Set the scale mode to scale to fit the window
+            scene.scaleMode = .aspectFill
+            // Present the scene
+            view.presentScene(scene, transition: .crossFade(withDuration: 0.2))
+        }
     }
     
     
@@ -97,6 +100,17 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
     }
     
     func back(sender: GameScene) {
+        if let view = self.view as? SKView {
+            let scene = MenuScene(size: view.frame.size)
+            scene.menuSceneDelegate = self
+            // Set the scale mode to scale to fit the window
+            scene.scaleMode = .aspectFill
+            
+            // Present the scene
+            view.presentScene(scene, transition: .crossFade(withDuration: 0.2))
+        }
+    }
+    func optionsToMenu(sender: OptionsScene) {
         if let view = self.view as? SKView {
             let scene = MenuScene(size: view.frame.size)
             scene.menuSceneDelegate = self

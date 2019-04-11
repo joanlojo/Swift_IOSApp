@@ -92,7 +92,7 @@ class MenuScene: SKScene, ButtonDelegate {
             options.delegate = self
             options.optionsOriginal = "options"
             options.optionsPressed = "optionsPressed"
-            options.setImage(imageNamed: options.optionsOriginal!)
+            options.setImage(imageNamed: options.optionsOriginal!, scale: 0.07)
             addChild(options)
         }
     }
@@ -163,7 +163,9 @@ class MenuScene: SKScene, ButtonDelegate {
             }
         }
         else if sender == options{
-            print("options")
+            if let menuSceneDelegate = menuSceneDelegate {
+                menuSceneDelegate.goToSettings(sender: self)
+            }
         }
     }
     

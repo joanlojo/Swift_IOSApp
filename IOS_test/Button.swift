@@ -36,13 +36,13 @@ class Button: SKShapeNode {
         textNode.text = text
     }
     
-    func setImage(imageNamed: String){
+    func setImage(imageNamed: String, scale: CGFloat){
         if let icon = self.icon {
             icon.removeFromParent()
         }
         let icon = SKSpriteNode(imageNamed: imageNamed)
         icon.position = CGPoint(x: frame.width / 2.0, y: frame.height / 2.0)
-        icon.setScale(0.07)
+        icon.setScale(scale)
         addChild(icon)
         self.icon = icon
     }
@@ -51,7 +51,7 @@ class Button: SKShapeNode {
         //let action = SKAction.scale(by: 0.9, duration: 0.1)
         //run(action)
         if let optionsPressed = self.optionsPressed{
-            setImage(imageNamed: optionsPressed)
+            setImage(imageNamed: optionsPressed, scale: 0.07)
         }
         if let highlightColor = highlightColor {
             originalColor = fillColor
@@ -69,7 +69,7 @@ class Button: SKShapeNode {
         //let action = SKAction.scale(by: 1.0/0.9, duration: 0.1)
         //run(action)
         if let _ = optionsPressed, let optionsOriginal = optionsOriginal {
-            setImage(imageNamed: optionsOriginal)
+            setImage(imageNamed: optionsOriginal, scale: 0.07)
         }
         if let _ = highlightColor {
             fillColor = originalColor
