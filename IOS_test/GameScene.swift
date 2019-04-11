@@ -143,7 +143,7 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
                 else if(i>=8){
                     cardSprite[i].position = CGPoint(x: 5 * view.frame.width/6, y: (0.5 + CGFloat(i-8)) * view.frame.height / 5)
                 }
-                cardSprite[i].setScale(10)
+                cardSprite[i].size = CGSize(width: view.frame.width / 3.5, height: view.frame.width / 3.5)
             }
             else if difficulty == .medium{
                 if(i<5){
@@ -158,7 +158,7 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
                 else if(i>=15){
                     cardSprite[i].position = CGPoint(x: 7 * view.frame.width/8, y: (0.6 + CGFloat(i-15)) * view.frame.height /  6.5)
                 }
-                cardSprite[i].setScale(8)
+                cardSprite[i].size = CGSize(width: view.frame.width / 4.5 , height: view.frame.width / 4.5 )
             }
             else if difficulty == .hard{
                 if(i<6){
@@ -176,7 +176,7 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
                 else if(i>=24){
                     cardSprite[i].position = CGPoint(x: 9 * view.frame.width/10, y: (0.6 + CGFloat(i-24)) * view.frame.height /  7.8)
                 }
-                cardSprite[i].setScale(6)
+                cardSprite[i].size = CGSize(width: view.frame.width / 5, height: view.frame.width / 5)
                 
             }
             scene?.addChild(cardSprite[i])
@@ -197,24 +197,14 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
                 //cualquier carta que seleccionas la giras
                 card.state = Card.CardState.destapada
                 sender.changeTexture(texture: sender.textureFront)
-                
+                //envias la carta que tocas
                 gameLogic.tryMatch(card: card)
                 //secuencia para la animacion de la carta
                 let wait = SKAction.wait(forDuration: 0.5)
                 let sequence = SKAction.sequence([
                     wait,
                     SKAction.run {
-                        if card.state == Card.CardState.destapada{
-                            sender.changeTexture(texture: sender.textureFront)
-                            for i in 0..<self.cardSprite.count{
-                                if self.gameLogic.cardSelected?.ID == self.cardSprite[i].card?.ID{
-                                    if self.gameLogic.cardSelected?.state == Card.CardState.destapada{
-                                        //self.cardSprite[i].changeTexture(texture: sender.textureFront)
-                                    }
-                                }
-                            }
-                            
-                        }else if card.state == Card.CardState.tapada{
+                         if card.state == Card.CardState.tapada{
                             sender.changeTexture(texture: sender.textureBack)
                             for i in 0..<self.cardSprite.count{
                                 if self.gameLogic.cardSelected?.ID == self.cardSprite[i].card?.ID{
@@ -223,25 +213,19 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
                                     }
                                 }
                             }
+                            self.comboLabel.text = ""
                         }
                         // else{
                         if card.state == Card.CardState.match{
                             //para que se actualizen los puntos durante la partida
                             self.valuePoints.text = "Points: " + String(self.gameLogic.points)
-                            sender.changeTexture(texture: sender.textureFront)
-                            for i in 0..<self.cardSprite.count{
-                                if self.gameLogic.cardSelected?.ID == self.cardSprite[i].card?.ID{
-                                    if self.gameLogic.cardSelected?.state == Card.CardState.match{
-                                        //self.cardSprite[i].changeTexture(texture: sender.textureFront)
-                                    }
-                                }
+                            if self.gameLogic.combos >= 2{
+                                self.comboLabel.text = "Combo x" + String(self.gameLogic.combos)
                             }
                         }
                     }
                     ])
-                self.run(sequence)
-                //if SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run{
-              
+                self.run(sequence)              
             }
         }
         //cargar la escena del final de la partida
@@ -259,9 +243,7 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
     }
     
     override func update(_ currentTime: TimeInterval) {
-        if gameLogic.combos >= 2{
-            comboLabel.text = "Combo x" + String(gameLogic.combos)
-        }
+   
         
         gameLogic.getFirstTime(time: currentTime)
         gameLogic.time = gameLogic.maxTime - (currentTime - gameLogic.initTime)

@@ -39,7 +39,7 @@ class CardSprite: SKSpriteNode {
     //funcion para cambiar las texturas de la carta cuando la giras haciendo una pequeña animacion modificando las escalas de las texturas
     func changeTexture(texture: SKTexture) {
         let toZeroScaleAction = SKAction.scaleX(to: 0, duration: 0.1)
-        let toOriginalScaleAction = SKAction.scaleX(to: 10, duration: 0.1)
+        let toOriginalScaleAction = SKAction.scaleX(to: 1, duration: 0.1)
         
         let sequence = SKAction.sequence([
             toZeroScaleAction,
