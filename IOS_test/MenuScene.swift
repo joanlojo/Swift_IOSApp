@@ -30,6 +30,7 @@ class MenuScene: SKScene, ButtonDelegate {
     private var options: Button?
     
     override func didMove(to view: SKView) {
+        AudioController.shared.play()
         
         let buttonWidth = view.frame.width / 1.8
         let buttonHeight = buttonWidth / 4.5

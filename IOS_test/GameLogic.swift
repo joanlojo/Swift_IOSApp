@@ -27,7 +27,8 @@ class GameLogic {
     
     var isMatchReady: Bool?
     let difficulty: Int
-    let namePathFront = ["pogba", "cr", "grizi", "rash", "messi", "ibra", "pique", "ramos", "bape", "rak", "ney"] //nombre de todas las caras
+    let namePathFront = ["pogba", "cr", "grizi", "rash", "messi", "ibra", "pique", "ramos", "bape", "rak", "ney", "aguero", "gea", "de", "salah","haz", "kante", "linde", "lewa", "vini" ,
+                         "vidal", "firm", "dyb", "cou", "chie", "icardi" ] //nombre de todas las caras
     let namePathBack = ["backCard"]
     
     init (){

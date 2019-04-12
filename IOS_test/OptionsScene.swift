@@ -53,12 +53,12 @@ class OptionsScene: SKScene, ButtonDelegate{
         
         soundButton = Button(rect: CGRect(x: 0, y: 0 , width: buttonWidth, height: buttonHeight), cornerRadius: 10)
         if let soundButton = soundButton{
-            soundButton.setImage(imageNamed: "sound", scale: 0.7)
+            soundButton.setImage(imageNamed: "sound", scale: 1.0)
             soundButton.fillColor = .clear
-            soundButton.strokeColor = .red
+            soundButton.strokeColor = .clear
             soundButton.isUserInteractionEnabled = true
             soundButton.delegate = self
-           // soundButton.position = CGPoint(x: view.frame.width / 2 - (buttonWidth / 2), y: view.frame.height / 2)
+            soundButton.position = CGPoint(x: view.frame.width / 2 - (buttonWidth / 2), y: view.frame.height / 2)
             addChild(soundButton)
         }
     }
@@ -70,12 +70,12 @@ class OptionsScene: SKScene, ButtonDelegate{
         }
         else if sender == soundButton{
             if soundPressed == false{
-                soundButton?.setImage(imageNamed: "mute", scale: 2.0)
-                print("muteo")
+                soundButton?.setImage(imageNamed: "mute", scale: 1.0)
+                AudioController.shared.off()
                 soundPressed = true
             }else if soundPressed == true{
-                soundButton?.setImage(imageNamed: "sound", scale: 2.0)
-                print("dejo de muteo")
+                soundButton?.setImage(imageNamed: "sound", scale: 1.0)
+                AudioController.shared.on()
                 soundPressed = false
             }
             
