@@ -10,6 +10,9 @@
 		A3426B79225F6A4F00FCB1E8 /* OptionsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3426B78225F6A4F00FCB1E8 /* OptionsScene.swift */; };
 		A35912092260B6BC00F1A54A /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35912082260B6BC00F1A54A /* AudioManager.swift */; };
 		A359120E2260BA4000F1A54A /* mainTheme.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A359120D2260BA4000F1A54A /* mainTheme.mp3 */; };
+		A35912102260BE2F00F1A54A /* Match_Correct.wav in Resources */ = {isa = PBXBuildFile; fileRef = A359120F2260BE2F00F1A54A /* Match_Correct.wav */; };
+		A35912122260BE3700F1A54A /* Match_Incorrect.wav in Resources */ = {isa = PBXBuildFile; fileRef = A35912112260BE3700F1A54A /* Match_Incorrect.wav */; };
+		A35912142260BE7800F1A54A /* Combo.wav in Resources */ = {isa = PBXBuildFile; fileRef = A35912132260BE7800F1A54A /* Combo.wav */; };
 		A35C8C20225B8943007F0EF6 /* EndGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35C8C1F225B8943007F0EF6 /* EndGameScene.swift */; };
 		A508BEAF22314E3B001692FD /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = A508BEAE22314E3B001692FD /* Button.swift */; };
 		A562028C223BDBEA00E371E0 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A562028B223BDBEA00E371E0 /* GameScene.swift */; };
@@ -30,6 +33,9 @@
 		A3426B78225F6A4F00FCB1E8 /* OptionsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsScene.swift; sourceTree = "<group>"; };
 		A35912082260B6BC00F1A54A /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		A359120D2260BA4000F1A54A /* mainTheme.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = mainTheme.mp3; path = ../../../../Downloads/mainTheme.mp3; sourceTree = "<group>"; };
+		A359120F2260BE2F00F1A54A /* Match_Correct.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Match_Correct.wav; path = ../../../../Downloads/Match_Correct.wav; sourceTree = "<group>"; };
+		A35912112260BE3700F1A54A /* Match_Incorrect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Match_Incorrect.wav; path = ../../../../Downloads/Match_Incorrect.wav; sourceTree = "<group>"; };
+		A35912132260BE7800F1A54A /* Combo.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Combo.wav; path = ../../../../Downloads/Combo.wav; sourceTree = "<group>"; };
 		A35C8C1F225B8943007F0EF6 /* EndGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndGameScene.swift; sourceTree = "<group>"; };
 		A508BEAE22314E3B001692FD /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		A562028B223BDBEA00E371E0 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -62,6 +68,9 @@
 		A359120A2260B90800F1A54A /* Music */ = {
 			isa = PBXGroup;
 			children = (
+				A359120F2260BE2F00F1A54A /* Match_Correct.wav */,
+				A35912132260BE7800F1A54A /* Combo.wav */,
+				A35912112260BE3700F1A54A /* Match_Incorrect.wav */,
 				A359120D2260BA4000F1A54A /* mainTheme.mp3 */,
 			);
 			path = Music;
@@ -166,9 +175,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A35912142260BE7800F1A54A /* Combo.wav in Resources */,
 				A56E8E5D2216F2EE006D4DF5 /* Main.storyboard in Resources */,
+				A35912102260BE2F00F1A54A /* Match_Correct.wav in Resources */,
 				A359120E2260BA4000F1A54A /* mainTheme.mp3 in Resources */,
 				A56E8E542216F2EE006D4DF5 /* GameScene.sks in Resources */,
+				A35912122260BE3700F1A54A /* Match_Incorrect.wav in Resources */,
 				A56E8E5F2216F2F1006D4DF5 /* Assets.xcassets in Resources */,
 				A56E8E622216F2F1006D4DF5 /* LaunchScreen.storyboard in Resources */,
 				A56E8E562216F2EE006D4DF5 /* Actions.sks in Resources */,

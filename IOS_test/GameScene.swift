@@ -20,6 +20,7 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
     var gameMode: SKLabelNode!
     var cardSprite = [CardSprite]()
     
+    
     var valuePoints: SKLabelNode!
     var timeLabel: SKLabelNode!
     var comboLabel: SKLabelNode!
@@ -193,6 +194,7 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
     //enviar la carta para comprobar la logica y cambiar las texturas a corde con el estado de la carta
     func onTap(sender: CardSprite) {
         if let card = sender.card{
+    
             if card.state != Card.CardState.destapada && card.state != Card.CardState.match{
                 //cualquier carta que seleccionas la giras
                 card.state = Card.CardState.destapada
@@ -206,6 +208,8 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
                     SKAction.run {
                          if card.state == Card.CardState.tapada{
                             sender.changeTexture(texture: sender.textureBack)
+                            self.run(SKAction.playSoundFileNamed("Match_Incorrect.wav", waitForCompletion: false))
+
                             for i in 0..<self.cardSprite.count{
                                 if self.gameLogic.cardSelected?.ID == self.cardSprite[i].card?.ID{
                                     if self.gameLogic.cardSelected?.state == Card.CardState.tapada{
@@ -215,12 +219,15 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
                             }
                             self.comboLabel.text = ""
                         }
-                        // else{
                         if card.state == Card.CardState.match{
+                            self.run(SKAction.playSoundFileNamed("Match_Correct.wav", waitForCompletion: false))
+
                             //para que se actualizen los puntos durante la partida
                             self.valuePoints.text = "Points: " + String(self.gameLogic.points)
                             if self.gameLogic.combos >= 2{
                                 self.comboLabel.text = "Combo x" + String(self.gameLogic.combos)
+                                self.run(SKAction.playSoundFileNamed("Combo.wav", waitForCompletion: false))
+
                             }
                         }
                     }
@@ -244,11 +251,12 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
     
     override func update(_ currentTime: TimeInterval) {
    
-        
+        //calcular el cuenta atras del tiempo de la partida y mostrarlo
         gameLogic.getFirstTime(time: currentTime)
         gameLogic.time = gameLogic.maxTime - (currentTime - gameLogic.initTime)
         timeLabel.text = "Time: " + String(Int(gameLogic.time))
         
+
         if Int(gameLogic.time) <= 0{
             let wait = SKAction.wait(forDuration: 1)
             let sequence = SKAction.sequence([
