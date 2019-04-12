@@ -17,7 +17,7 @@ class OptionsScene: SKScene, ButtonDelegate{
     var backButton : Button?
     var soundButton : Button?
     
-    var soundPressed: Bool = false
+    //var soundPressed: Bool = false
     
     weak var optionsDelegate: OptionsDelegate?
     var creditLabel: SKLabelNode?
@@ -69,14 +69,14 @@ class OptionsScene: SKScene, ButtonDelegate{
             optionsDelegate?.optionsToMenu(sender: self)
         }
         else if sender == soundButton{
-            if soundPressed == false{
+            if AudioController.shared.soundPressed == false{
                 soundButton?.setImage(imageNamed: "mute", scale: 1.0)
                 AudioController.shared.off()
-                soundPressed = true
-            }else if soundPressed == true{
+                AudioController.shared.soundPressed = true
+            }else if AudioController.shared.soundPressed == true{
                 soundButton?.setImage(imageNamed: "sound", scale: 1.0)
                 AudioController.shared.on()
-                soundPressed = false
+                AudioController.shared.soundPressed = false
             }
             
            

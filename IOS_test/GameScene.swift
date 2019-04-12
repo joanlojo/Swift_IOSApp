@@ -208,7 +208,11 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
                     SKAction.run {
                          if card.state == Card.CardState.tapada{
                             sender.changeTexture(texture: sender.textureBack)
-                            self.run(SKAction.playSoundFileNamed("Match_Incorrect.wav", waitForCompletion: false))
+                            if !AudioController.shared.soundPressed{
+                                self.run(SKAction.playSoundFileNamed("Match_Incorrect.wav", waitForCompletion: false))
+                            }else{
+                                SKAction.wait(forDuration: 0.0)
+                            }
 
                             for i in 0..<self.cardSprite.count{
                                 if self.gameLogic.cardSelected?.ID == self.cardSprite[i].card?.ID{
@@ -220,13 +224,20 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
                             self.comboLabel.text = ""
                         }
                         if card.state == Card.CardState.match{
-                            self.run(SKAction.playSoundFileNamed("Match_Correct.wav", waitForCompletion: false))
-
+                            if !AudioController.shared.soundPressed{
+                                self.run(SKAction.playSoundFileNamed("Match_Correct.wav", waitForCompletion: false))
+                            }else{
+                                SKAction.wait(forDuration: 0.0)
+                            }
                             //para que se actualizen los puntos durante la partida
                             self.valuePoints.text = "Points: " + String(self.gameLogic.points)
                             if self.gameLogic.combos >= 2{
                                 self.comboLabel.text = "Combo x" + String(self.gameLogic.combos)
-                                self.run(SKAction.playSoundFileNamed("Combo.wav", waitForCompletion: false))
+                                if !AudioController.shared.soundPressed{
+                                    self.run(SKAction.playSoundFileNamed("Combo.wav", waitForCompletion: false))
+                                }else{
+                                    SKAction.wait(forDuration: 0.0)
+                                }
 
                             }
                         }
