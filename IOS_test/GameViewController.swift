@@ -38,6 +38,8 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("db")
+        FirestoreRepository().writeUserScore()
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
