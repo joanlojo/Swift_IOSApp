@@ -8,4 +8,5 @@ target 'IOS_test' do
   # Pods for IOS_test
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
+  pod 'Firebase/AdMob'
 end

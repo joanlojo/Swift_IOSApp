@@ -9,9 +9,37 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import FirebaseAnalytics
+import GoogleMobileAds
 
 class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate, EndGameDelegate, OptionsDelegate {
 
+    var bannerView: GADBannerView!
+    
+    
+    func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        view.addConstraints(
+            [NSLayoutConstraint(item: bannerView,
+                                attribute: .bottom,
+                                relatedBy: .equal,
+                                toItem: bottomLayoutGuide,
+                                attribute: .top,
+                                multiplier: 1,
+                                constant: 0),
+             NSLayoutConstraint(item: bannerView,
+                                attribute: .centerX,
+                                relatedBy: .equal,
+                                toItem: view,
+                                attribute: .centerX,
+                                multiplier: 1,
+                                constant: 0)
+            ])
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
+    }
     
     func endGame(sender: GameScene) {
         
@@ -37,6 +65,12 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
     
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // In this case, we instantiate the banner with desired ad size.
+        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        
+        addBannerViewToView(bannerView)
         super.viewDidLoad()
         print("db")
         let userId = UUID().uuidString
@@ -140,4 +174,9 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
     func gameToResult(sender: EndGameScene) {
         
     }
+    
+    func goToNextLevel(level: Int){
+        Analytics.logEvent("nextlevel", parameters: ["levelNumber": level]) //cuando te pasas un nivel de dificultad
+    }
+    
 }
