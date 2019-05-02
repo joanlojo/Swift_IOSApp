@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import FirebaseAnalytics
 
 protocol RankingDelegate: class {
     func rankingToMenu(sender: RankingScene)
@@ -31,6 +32,7 @@ class RankingScene: SKScene, ButtonDelegate {
         let widthRatio = frame.width / 2
         let heightRatio = widthRatio / 4.1
         
+        FirestoreRepository().getUsetScore()
         //mostar los puntos de la partida
  
         self.endGameLabel = SKLabelNode(text: "RANKING")

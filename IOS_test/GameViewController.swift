@@ -97,11 +97,15 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
         return true
     }
     
+    func goToNextLevel(level: Difficulty){
+        Analytics.logEvent("nextlevel", parameters: ["levelNumber": level]) //cuando te pasas un nivel de dificultad
+    }
     func goToGame(sender: MenuScene, difficulty: Difficulty) {
         if let view = self.view as? SKView {
             let scene = GameScene(size: view.frame.size)
             scene.difficulty = difficulty
             scene.gameSceneDelegate = self
+            goToNextLevel(level: difficulty)
             scene.backgroundColor = SKColor(named: "Fondo")!
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
@@ -190,9 +194,7 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
         
     }
     
-    func goToNextLevel(level: Int){
-        Analytics.logEvent("nextlevel", parameters: ["levelNumber": level]) //cuando te pasas un nivel de dificultad
-    }
+
     
     func endGame(sender: GameScene) {
         
