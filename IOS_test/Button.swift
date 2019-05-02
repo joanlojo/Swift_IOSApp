@@ -20,8 +20,8 @@ class Button: SKShapeNode {
     var originalColor = SKColor(named: "notPressed")!
     var originalColorStroke = SKColor.clear
     var highlightColor: SKColor?
-    var optionsOriginal: String?
-    var optionsPressed: String?
+    var buttonImageOriginal: String?
+    var buttonImagePressed: String?
     var highlightStroke: SKColor?
     
     func setText(text: String){
@@ -50,8 +50,8 @@ class Button: SKShapeNode {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //let action = SKAction.scale(by: 0.9, duration: 0.1)
         //run(action)
-        if let optionsPressed = self.optionsPressed{
-            setImage(imageNamed: optionsPressed, scale: 0.07)
+        if let buttonImagePressed = self.buttonImagePressed{
+            setImage(imageNamed: buttonImagePressed, scale: 0.07)
         }
         if let highlightColor = highlightColor {
             originalColor = fillColor
@@ -68,8 +68,8 @@ class Button: SKShapeNode {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         //let action = SKAction.scale(by: 1.0/0.9, duration: 0.1)
         //run(action)
-        if let _ = optionsPressed, let optionsOriginal = optionsOriginal {
-            setImage(imageNamed: optionsOriginal, scale: 0.07)
+        if let _ = buttonImagePressed, let buttonImageOriginal = buttonImageOriginal {
+            setImage(imageNamed: buttonImageOriginal, scale: 0.07)
         }
         if let _ = highlightColor {
             fillColor = originalColor

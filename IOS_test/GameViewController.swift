@@ -12,7 +12,9 @@ import GameplayKit
 import FirebaseAnalytics
 import GoogleMobileAds
 
-class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate, EndGameDelegate, OptionsDelegate {
+class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate, EndGameDelegate, OptionsDelegate, RankingDelegate {
+   
+    
 
     var bannerView: GADBannerView!
     
@@ -40,15 +42,7 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
     }
-    
-    func endGame(sender: GameScene) {
-        
-    }
-    
-    
-    func goToAbout(sender: MenuScene) {
-        
-    }
+
     
     func goToSettings(sender: MenuScene) {
         if let view = self.view as? SKView {
@@ -61,21 +55,15 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
         }
     }
     
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // In this case, we instantiate the banner with desired ad size.
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
         
         addBannerViewToView(bannerView)
-        super.viewDidLoad()
-        print("db")
-        let userId = UUID().uuidString
-        FirestoreRepository().updateUserScore(score: 55, username: "pepe", userId: userId)
-        
+        //super.viewDidLoad()
+        //print("db")
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
             let scene = MenuScene(size:view.frame.size)
@@ -128,6 +116,20 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
             let scene = EndGameScene(size: view.frame.size)
             scene.pointsLastGame = points
             scene.endGameDelegate = self
+            let userId = UUID().uuidString
+            FirestoreRepository().updateUserScore(score: scene.pointsLastGame, username: "lasttest", userId: userId)
+            // Set the scale mode to scale to fit the window
+            scene.scaleMode = .aspectFill
+            
+            // Present the scene
+            view.presentScene(scene, transition: .crossFade(withDuration: 0.2))
+        }
+    }
+    func goToHighScore(sender: MenuScene) {
+        if let view = self.view as? SKView {
+            let scene = RankingScene(size: view.frame.size)
+            scene.rankingDelegate = self
+            scene.backgroundColor = SKColor(named: "Fondo")!
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
             
@@ -136,6 +138,9 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
         }
     }
     
+    func goToLogin(sender: MenuScene) {
+        //<#code#>
+    }
     func back(sender: GameScene) {
         if let view = self.view as? SKView {
             let scene = MenuScene(size: view.frame.size)
@@ -169,7 +174,17 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
             view.presentScene(scene, transition: .crossFade(withDuration: 0.2))
         }
     }
-    
+    func rankingToMenu(sender: RankingScene) {
+        if let view = self.view as? SKView {
+            let scene = MenuScene(size: view.frame.size)
+            scene.menuSceneDelegate = self
+            // Set the scale mode to scale to fit the window
+            scene.scaleMode = .aspectFill
+            
+            // Present the scene
+            view.presentScene(scene, transition: .crossFade(withDuration: 0.2))
+        }
+    }
     
     func gameToResult(sender: EndGameScene) {
         
@@ -179,4 +194,12 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
         Analytics.logEvent("nextlevel", parameters: ["levelNumber": level]) //cuando te pasas un nivel de dificultad
     }
     
+    func endGame(sender: GameScene) {
+        
+    }
+    
+    
+    func goToAbout(sender: MenuScene) {
+        
+    }
 }

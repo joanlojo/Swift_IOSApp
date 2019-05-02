@@ -13,6 +13,8 @@ protocol MenuSceneDelegate: class {
     func goToGame(sender: MenuScene, difficulty: Difficulty)
     func goToAbout(sender: MenuScene)
     func goToSettings(sender: MenuScene)
+    func goToHighScore(sender: MenuScene)
+    func goToLogin(sender: MenuScene)
 }
 
 class MenuScene: SKScene, ButtonDelegate {
@@ -28,6 +30,8 @@ class MenuScene: SKScene, ButtonDelegate {
     private var medium: Button?
     private var hard: Button?
     private var options: Button?
+    private var login: Button?
+    private var highScore: Button?
     
     override func didMove(to view: SKView) {
         AudioController.shared.play()
@@ -40,7 +44,9 @@ class MenuScene: SKScene, ButtonDelegate {
         easy = Button(rect: CGRect(x:0,y:0,width:buttonWidth, height: buttonHeight), cornerRadius: buttonHeight / 2.0)
         medium = Button(rect: CGRect(x:0,y:0,width:buttonWidth, height: buttonHeight), cornerRadius: buttonHeight / 2.0)
         hard = Button(rect: CGRect(x:0,y:0,width:buttonWidth, height: buttonHeight), cornerRadius: buttonHeight / 2.0)
+        login = Button(rect: CGRect(x:0,y:0,width:buttonWidth, height: buttonHeight), cornerRadius: buttonHeight / 2.0)
         options = Button(rect: CGRect(x:0,y:0,width:buttonWidth, height: buttonHeight), cornerRadius: buttonHeight / 2.0)
+        highScore = Button(rect: CGRect(x:0,y:0,width:buttonWidth, height: buttonHeight), cornerRadius: buttonHeight / 2.0)
         
         gameName = SKLabelNode(fontNamed: "Futura")
         gameName.text = "Memory"
@@ -83,7 +89,17 @@ class MenuScene: SKScene, ButtonDelegate {
             hard.setText(text: "Hard")
             addChild(hard)
         }
-        
+        if let login = login{
+            login.fillColor = SKColor(named: "notPressed")!
+            login.strokeColor = .clear
+            login.highlightStroke = SKColor(red: 0.6 , green: 0.6, blue: 0.6, alpha: 0.5)
+            login.highlightColor = SKColor(named: "pressed")!
+            login.isUserInteractionEnabled = true
+            login.position = CGPoint(x:view.frame.width / 2.0 - login.frame.width/2, y: view.frame.height / 2.0 - login.frame.height/2 - 300)
+            login.delegate = self
+            login.setText(text: "Login")
+            addChild(login)
+        }
         if let options = options{
             options.highlightStroke = .clear
             options.highlightColor = .clear
@@ -91,10 +107,22 @@ class MenuScene: SKScene, ButtonDelegate {
             options.isUserInteractionEnabled = true
             options.position = CGPoint(x:view.frame.width / 10.0 - options.frame.width/2, y: view.frame.height * 0.9)
             options.delegate = self
-            options.optionsOriginal = "options"
-            options.optionsPressed = "optionsPressed"
-            options.setImage(imageNamed: options.optionsOriginal!, scale: 0.07)
+            options.buttonImageOriginal = "options"
+            options.buttonImagePressed = "optionsPressed"
+            options.setImage(imageNamed: options.buttonImageOriginal!, scale: 0.07)
             addChild(options)
+        }
+        if let highScore = highScore{
+            highScore.highlightStroke = .clear
+            highScore.highlightColor = .clear
+            highScore.strokeColor = .clear
+            highScore.isUserInteractionEnabled = true
+            highScore.position = CGPoint(x:view.frame.width - highScore.frame.width * 0.75, y: view.frame.height * 0.9)
+            highScore.delegate = self
+            highScore.buttonImageOriginal = "ranking"
+            highScore.buttonImageOriginal = "ranking"
+            highScore.setImage(imageNamed: highScore.buttonImageOriginal!, scale: 0.07)
+            addChild(highScore)
         }
     }
     
@@ -164,6 +192,16 @@ class MenuScene: SKScene, ButtonDelegate {
             }
         }
         else if sender == options{
+            if let menuSceneDelegate = menuSceneDelegate {
+                menuSceneDelegate.goToSettings(sender: self)
+            }
+        }
+        else if sender == highScore{
+            if let menuSceneDelegate = menuSceneDelegate {
+                menuSceneDelegate.goToHighScore(sender: self)
+            }
+        }
+        else if sender == login{
             if let menuSceneDelegate = menuSceneDelegate {
                 menuSceneDelegate.goToSettings(sender: self)
             }

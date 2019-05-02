@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2553F9394C8D729713B4D7A2 /* Pods_IOS_test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C2AC6DDEF098951C9CB3F6B /* Pods_IOS_test.framework */; };
 		A3426B79225F6A4F00FCB1E8 /* OptionsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3426B78225F6A4F00FCB1E8 /* OptionsScene.swift */; };
+		A34A72B2227B1942007BFCBB /* LoginScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34A72B1227B1942007BFCBB /* LoginScene.swift */; };
+		A34A72B4227B1E1D007BFCBB /* RankingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34A72B3227B1E1D007BFCBB /* RankingScene.swift */; };
 		A35912092260B6BC00F1A54A /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35912082260B6BC00F1A54A /* AudioManager.swift */; };
 		A359120E2260BA4000F1A54A /* mainTheme.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A359120D2260BA4000F1A54A /* mainTheme.mp3 */; };
 		A35912102260BE2F00F1A54A /* Match_Correct.wav in Resources */ = {isa = PBXBuildFile; fileRef = A359120F2260BE2F00F1A54A /* Match_Correct.wav */; };
@@ -36,6 +38,8 @@
 		0C2AC6DDEF098951C9CB3F6B /* Pods_IOS_test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IOS_test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		704A9166E4D72EEBAA3C6DFB /* Pods-IOS_test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IOS_test.release.xcconfig"; path = "Target Support Files/Pods-IOS_test/Pods-IOS_test.release.xcconfig"; sourceTree = "<group>"; };
 		A3426B78225F6A4F00FCB1E8 /* OptionsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsScene.swift; sourceTree = "<group>"; };
+		A34A72B1227B1942007BFCBB /* LoginScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScene.swift; sourceTree = "<group>"; };
+		A34A72B3227B1E1D007BFCBB /* RankingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingScene.swift; sourceTree = "<group>"; };
 		A35912082260B6BC00F1A54A /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		A359120D2260BA4000F1A54A /* mainTheme.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = mainTheme.mp3; path = ../../../../Downloads/mainTheme.mp3; sourceTree = "<group>"; };
 		A359120F2260BE2F00F1A54A /* Match_Correct.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Match_Correct.wav; path = ../../../../Downloads/Match_Correct.wav; sourceTree = "<group>"; };
@@ -135,6 +139,8 @@
 				A3426B78225F6A4F00FCB1E8 /* OptionsScene.swift */,
 				A35912082260B6BC00F1A54A /* AudioManager.swift */,
 				A395F2C52271E17C007C16B0 /* FirestoreRepository.swift */,
+				A34A72B1227B1942007BFCBB /* LoginScene.swift */,
+				A34A72B3227B1E1D007BFCBB /* RankingScene.swift */,
 			);
 			path = IOS_test;
 			sourceTree = "<group>";
@@ -289,7 +295,9 @@
 				A56E8E582216F2EE006D4DF5 /* MenuScene.swift in Sources */,
 				A5AE39FA2243C64B00695F1D /* Card.swift in Sources */,
 				A56E8E5A2216F2EE006D4DF5 /* GameViewController.swift in Sources */,
+				A34A72B4227B1E1D007BFCBB /* RankingScene.swift in Sources */,
 				A3426B79225F6A4F00FCB1E8 /* OptionsScene.swift in Sources */,
+				A34A72B2227B1942007BFCBB /* LoginScene.swift in Sources */,
 				A56E8E522216F2EE006D4DF5 /* AppDelegate.swift in Sources */,
 				A5AE39FE2243CAEA00695F1D /* CardSprite.swift in Sources */,
 				A508BEAF22314E3B001692FD /* Button.swift in Sources */,
