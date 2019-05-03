@@ -97,17 +97,17 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
         return true
     }
     
-    func goToNextLevel(level: Difficulty){
-        Analytics.logEvent("nextlevel", parameters: ["levelNumber": level]) //cuando te pasas un nivel de dificultad
+    func goToNextLevel(){
+        Analytics.logEvent("nextlevel", parameters: [:]) //cuando te pasas un nivel de dificultad
     }
     func goToGame(sender: MenuScene, difficulty: Difficulty) {
         if let view = self.view as? SKView {
             let scene = GameScene(size: view.frame.size)
             scene.difficulty = difficulty
             scene.gameSceneDelegate = self
-            goToNextLevel(level: difficulty)
+            
             scene.backgroundColor = SKColor(named: "Fondo")!
-            // Set the scale mode to scale to fit the window
+            // Set the sca,le mode to scale to fit the window
             scene.scaleMode = .aspectFill
             
             // Present the scene
@@ -120,6 +120,7 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
             let scene = EndGameScene(size: view.frame.size)
             scene.pointsLastGame = points
             scene.endGameDelegate = self
+            goToNextLevel()
             let userId = UUID().uuidString
             FirestoreRepository().updateUserScore(score: scene.pointsLastGame, username: "lasttest", userId: userId)
             // Set the scale mode to scale to fit the window

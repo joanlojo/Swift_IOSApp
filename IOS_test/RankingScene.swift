@@ -19,7 +19,8 @@ class RankingScene: SKScene, ButtonDelegate {
     weak var rankingDelegate: RankingDelegate?
     
     var backButton : Button?
-    var points : SKLabelNode?
+    var ranking = [String]()
+    var rankingLabel : SKLabelNode?
     var pointsLastGame = 0
     
     var highScoreLabel: SKLabelNode?
@@ -32,7 +33,17 @@ class RankingScene: SKScene, ButtonDelegate {
         let widthRatio = frame.width / 2
         let heightRatio = widthRatio / 4.1
         
-        FirestoreRepository().getUsetScore()
+        FirestoreRepository().getUsetScore { (datos, error) in
+            for dato in datos ?? [] {
+                print(dato)
+            }
+        }
+
+        
+        //ranking = SKLabelNode(text: FirestoreRepository().getUsetScore())
+        
+//        print(FirestoreRepository().getUsetScore())
+        
         //mostar los puntos de la partida
  
         self.endGameLabel = SKLabelNode(text: "RANKING")
@@ -44,6 +55,7 @@ class RankingScene: SKScene, ButtonDelegate {
             endGameLabel.position = CGPoint(x: (view.frame.width / 2), y: view.frame.height * 0.70)
             addChild(endGameLabel)
         }
+        
         
         //boton para volver al menu inicial
         backButton = Button(rect: CGRect(x: 0, y: 0, width: widthRatio, height: heightRatio), cornerRadius: heightRatio / 2)

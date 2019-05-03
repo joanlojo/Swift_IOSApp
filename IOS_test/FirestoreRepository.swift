@@ -10,6 +10,7 @@ import Foundation
 import FirebaseFirestore
 
 class FirestoreRepository{
+//    public var datos = [String]()
     let k_COLLECTION_SCORES = "scores"
     
     func writeUserScore(score: Int, username: String?, userId: String){
@@ -23,17 +24,23 @@ class FirestoreRepository{
 
         db.collection(k_COLLECTION_SCORES).document(userId).setData(["score": score, "username": username ?? "", "userId": userId], merge: true)
     }
-    func getUsetScore(){
+    func getUsetScore(_ callback: @escaping (([String]?, Error?) -> Void)) {
         let db = Firestore.firestore()
-        
+
         db.collection(k_COLLECTION_SCORES).whereField("score", isGreaterThan: 0).getDocuments {( snapshot, error) in
             
             if let error = error{
                 print(error)
+                //return ""
+               // return false
                 // do something
+                callback(nil, error)
             } else{
-                snapshot?.documents.forEach({ print($0.data())})
-
+                var datos = [String]()
+                snapshot?.documents.forEach {
+                    datos.append("\(String(describing: $0.data()["score"]))")
+                }
+                callback(datos, nil)
             }
         }
     }
