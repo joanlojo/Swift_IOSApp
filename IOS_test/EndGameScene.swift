@@ -21,6 +21,9 @@ class EndGameScene: SKScene, ButtonDelegate {
     var points : SKLabelNode?
     var pointsLastGame = 0
     
+    let defaults = UserDefaults.standard
+    //var scores = [String]
+    
     var highScoreLabel: SKLabelNode?
     var endGameLabel: SKLabelNode?
     var highScore: Int = 0
@@ -31,6 +34,21 @@ class EndGameScene: SKScene, ButtonDelegate {
         let widthRatio = frame.width / 2
         let heightRatio = widthRatio / 4.1
         
+        if let highScore = defaults.string(forKey: "Score") {
+            if String(pointsLastGame) > highScore {
+                 defaults.set(String(pointsLastGame), forKey: "Score")
+            }
+            self.highScoreLabel = SKLabelNode(text: "High Score: " + String(highScore))
+            if let highScoreLabel = self.highScoreLabel {
+                highScoreLabel.fontColor = .black
+                highScoreLabel.verticalAlignmentMode = .center
+                highScoreLabel.fontSize = 18
+                highScoreLabel.fontName = "Futura"
+                highScoreLabel.position = CGPoint(x: (view.frame.width / 2), y: view.frame.height * 0.40)
+                addChild(highScoreLabel)
+            }
+        }
+       
         //mostar los puntos de la partida
         self.points = SKLabelNode(text: "Points: " + String(pointsLastGame))
         if let points = self.points {
@@ -42,15 +60,8 @@ class EndGameScene: SKScene, ButtonDelegate {
             addChild(points)
         }
         //mostrar el high score, demomento no esta la logica
-        self.highScoreLabel = SKLabelNode(text: "High Score: " + String(highScore))
-        if let highScoreLabel = self.highScoreLabel {
-            highScoreLabel.fontColor = .black
-            highScoreLabel.verticalAlignmentMode = .center
-            highScoreLabel.fontSize = 18
-            highScoreLabel.fontName = "Futura"
-            highScoreLabel.position = CGPoint(x: (view.frame.width / 2), y: view.frame.height * 0.40)
-            addChild(highScoreLabel)
-        }
+       
+       
         self.endGameLabel = SKLabelNode(text: "You have finished the game!")
         if let endGameLabel = self.endGameLabel{
             endGameLabel.fontColor = .red

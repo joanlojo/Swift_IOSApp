@@ -17,6 +17,7 @@
 		A35912122260BE3700F1A54A /* Match_Incorrect.wav in Resources */ = {isa = PBXBuildFile; fileRef = A35912112260BE3700F1A54A /* Match_Incorrect.wav */; };
 		A35912142260BE7800F1A54A /* Combo.wav in Resources */ = {isa = PBXBuildFile; fileRef = A35912132260BE7800F1A54A /* Combo.wav */; };
 		A35C8C20225B8943007F0EF6 /* EndGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35C8C1F225B8943007F0EF6 /* EndGameScene.swift */; };
+		A3940AB722845A140066BC9D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A3940AB622845A140066BC9D /* Localizable.strings */; };
 		A395F2C42271DD07007C16B0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A395F2C32271DD07007C16B0 /* GoogleService-Info.plist */; };
 		A395F2C62271E17C007C16B0 /* FirestoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A395F2C52271E17C007C16B0 /* FirestoreRepository.swift */; };
 		A508BEAF22314E3B001692FD /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = A508BEAE22314E3B001692FD /* Button.swift */; };
@@ -46,6 +47,9 @@
 		A35912112260BE3700F1A54A /* Match_Incorrect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Match_Incorrect.wav; path = ../../../../Downloads/Match_Incorrect.wav; sourceTree = "<group>"; };
 		A35912132260BE7800F1A54A /* Combo.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Combo.wav; path = ../../../../Downloads/Combo.wav; sourceTree = "<group>"; };
 		A35C8C1F225B8943007F0EF6 /* EndGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndGameScene.swift; sourceTree = "<group>"; };
+		A3940AB42284577D0066BC9D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
+		A3940AB52284577D0066BC9D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		A3940AB622845A140066BC9D /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		A395F2C32271DD07007C16B0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A395F2C52271E17C007C16B0 /* FirestoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreRepository.swift; sourceTree = "<group>"; };
 		A508BEAE22314E3B001692FD /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
@@ -141,6 +145,7 @@
 				A395F2C52271E17C007C16B0 /* FirestoreRepository.swift */,
 				A34A72B1227B1942007BFCBB /* LoginScene.swift */,
 				A34A72B3227B1E1D007BFCBB /* RankingScene.swift */,
+				A3940AB622845A140066BC9D /* Localizable.strings */,
 			);
 			path = IOS_test;
 			sourceTree = "<group>";
@@ -215,6 +220,7 @@
 			files = (
 				A35912142260BE7800F1A54A /* Combo.wav in Resources */,
 				A56E8E5D2216F2EE006D4DF5 /* Main.storyboard in Resources */,
+				A3940AB722845A140066BC9D /* Localizable.strings in Resources */,
 				A35912102260BE2F00F1A54A /* Match_Correct.wav in Resources */,
 				A359120E2260BA4000F1A54A /* mainTheme.mp3 in Resources */,
 				A56E8E542216F2EE006D4DF5 /* GameScene.sks in Resources */,
@@ -316,6 +322,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				A56E8E5C2216F2EE006D4DF5 /* Base */,
+				A3940AB42284577D0066BC9D /* es */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -324,6 +331,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				A56E8E612216F2F1006D4DF5 /* Base */,
+				A3940AB52284577D0066BC9D /* es */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -335,6 +343,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -396,6 +405,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

@@ -13,8 +13,7 @@ import FirebaseAnalytics
 import GoogleMobileAds
 
 class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate, EndGameDelegate, OptionsDelegate, RankingDelegate {
-   
-    
+
 
     var bannerView: GADBannerView!
     

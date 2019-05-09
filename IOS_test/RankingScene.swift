@@ -32,9 +32,11 @@ class RankingScene: SKScene, ButtonDelegate {
         //ratios
         let widthRatio = frame.width / 2
         let heightRatio = widthRatio / 4.1
-        
+        var count = 0
         FirestoreRepository().getUsetScore { (datos, error) in
             for dato in datos ?? [] {
+                count = count + 1
+                //if count <= 5{
                 self.highScore = dato
                 self.highScoreLabel = SKLabelNode(text: self.highScore)
                 if let highScoreLabel = self.highScoreLabel{
@@ -42,10 +44,13 @@ class RankingScene: SKScene, ButtonDelegate {
                     highScoreLabel.verticalAlignmentMode = .center
                     highScoreLabel.fontSize = 15
                     highScoreLabel.fontName = "Futura"
-                    highScoreLabel.position = CGPoint(x: (view.frame.width / 2), y: view.frame.height * 0.50)
+                    highScoreLabel.position = CGPoint(x: (view.frame.width / 2), y: view.frame.height / 2 * (0.04  * CGFloat(count)))
                     self.addChild(highScoreLabel)
                 }
+               // }
             }
+            //mostrar la mejor puntuacion global desde firebase
+         
         }
         
         //mostar los puntos de la partida
