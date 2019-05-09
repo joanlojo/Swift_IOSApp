@@ -38,7 +38,8 @@ class FirestoreRepository{
             } else{
                 var datos = [String]()
                 snapshot?.documents.forEach {
-                    datos.append("\(String(describing: $0.data()["score"]))")
+                    datos.append("\(String(describing: $0.data()["score"]!))")
+                   // print($0.data()["score"]!)
                 }
                 callback(datos, nil)
             }

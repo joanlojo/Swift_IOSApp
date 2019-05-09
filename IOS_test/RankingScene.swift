@@ -25,7 +25,7 @@ class RankingScene: SKScene, ButtonDelegate {
     
     var highScoreLabel: SKLabelNode?
     var endGameLabel: SKLabelNode?
-    var highScore: Int = 0
+    var highScore: String = ""
     
     override func didMove(to view: SKView) {
         backgroundColor = SKColor(named: "Fondo")!
@@ -35,14 +35,18 @@ class RankingScene: SKScene, ButtonDelegate {
         
         FirestoreRepository().getUsetScore { (datos, error) in
             for dato in datos ?? [] {
-                print(dato)
+                self.highScore = dato
+                self.highScoreLabel = SKLabelNode(text: self.highScore)
+                if let highScoreLabel = self.highScoreLabel{
+                    highScoreLabel.fontColor = .black
+                    highScoreLabel.verticalAlignmentMode = .center
+                    highScoreLabel.fontSize = 15
+                    highScoreLabel.fontName = "Futura"
+                    highScoreLabel.position = CGPoint(x: (view.frame.width / 2), y: view.frame.height * 0.50)
+                    self.addChild(highScoreLabel)
+                }
             }
         }
-
-        
-        //ranking = SKLabelNode(text: FirestoreRepository().getUsetScore())
-        
-//        print(FirestoreRepository().getUsetScore())
         
         //mostar los puntos de la partida
  
