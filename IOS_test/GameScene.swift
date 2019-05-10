@@ -194,7 +194,6 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
     //enviar la carta para comprobar la logica y cambiar las texturas a corde con el estado de la carta
     func onTap(sender: CardSprite) {
         if let card = sender.card{
-    
             if card.state != Card.CardState.destapada && card.state != Card.CardState.match{
                 //cualquier carta que seleccionas la giras
                 card.state = Card.CardState.destapada

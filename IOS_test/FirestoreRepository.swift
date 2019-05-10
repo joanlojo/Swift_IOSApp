@@ -27,7 +27,11 @@ class FirestoreRepository{
     func getUsetScore(_ callback: @escaping (([String]?, Error?) -> Void)) {
         let db = Firestore.firestore()
 
-        db.collection(k_COLLECTION_SCORES).whereField("score", isGreaterThan: 0).getDocuments {( snapshot, error) in
+        db.collection(k_COLLECTION_SCORES)
+            .whereField("score", isGreaterThan: 0)
+            .order(by: "score", descending: true)
+            .limit(to: 3)
+            .getDocuments {( snapshot, error) in
             
             if let error = error{
                 print(error)
