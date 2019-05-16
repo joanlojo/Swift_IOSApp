@@ -15,8 +15,7 @@ import GoogleMobileAds
 class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate, EndGameDelegate, OptionsDelegate, RankingDelegate {
 
 
-    var bannerView: GADBannerView!
-    
+   /* var bannerView: GADBannerView!
     
     func addBannerViewToView(_ bannerView: GADBannerView) {
         bannerView.translatesAutoresizingMaskIntoConstraints = false
@@ -40,7 +39,7 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
-    }
+    }*/
 
     
     func goToSettings(sender: MenuScene) {
@@ -58,11 +57,10 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
         super.viewDidLoad()
 
         // In this case, we instantiate the banner with desired ad size.
-        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        /*bannerView = GADBannerView(adSize: kGADAdSizeBanner)
         
-        addBannerViewToView(bannerView)
-        //super.viewDidLoad()
-        //print("db")
+        addBannerViewToView(bannerView)*/
+        
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
             let scene = MenuScene(size:view.frame.size)
@@ -119,7 +117,7 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
             let scene = EndGameScene(size: view.frame.size)
             scene.pointsLastGame = points
             scene.endGameDelegate = self
-            goToNextLevel()
+            //goToNextLevel()
             let userId = UUID().uuidString
             FirestoreRepository().updateUserScore(score: scene.pointsLastGame, username: "lasttest", userId: userId)
             // Set the scale mode to scale to fit the window

@@ -21,6 +21,12 @@ class RankingScene: SKScene, ButtonDelegate {
     var backButton : Button?
     var ranking = [String]()
     var rankingLabel : SKLabelNode?
+    
+
+    var goldMedal : SKSpriteNode?
+    var silverMedal : SKSpriteNode?
+    var bronzeMedal : SKSpriteNode?
+    
     var pointsLastGame = 0
     
     var highScoreLabel: SKLabelNode?
@@ -34,7 +40,7 @@ class RankingScene: SKScene, ButtonDelegate {
         let heightRatio = widthRatio / 4.1
         var count: Double = 0
         FirestoreRepository().getUsetScore { (datos, error) in
-            for dato in datos ?? [] {
+            for dato in datos?.reversed() ?? [] {
                 count = count + 0.15
                 self.highScore = dato
                 self.highScoreLabel = SKLabelNode(text: self.highScore)
@@ -57,11 +63,26 @@ class RankingScene: SKScene, ButtonDelegate {
         if let endGameLabel = self.endGameLabel{
             endGameLabel.fontColor = .red
             endGameLabel.verticalAlignmentMode = .center
-            endGameLabel.fontSize = 25
+            endGameLabel.fontSize = 30
             endGameLabel.fontName = "Futura"
-            endGameLabel.position = CGPoint(x: (view.frame.width / 2), y: view.frame.height * 0.70)
+            endGameLabel.position = CGPoint(x: (view.frame.width / 2), y: view.frame.height * 0.80)
             addChild(endGameLabel)
         }
+
+        let iconGold = SKSpriteNode(imageNamed: "goldmedal")
+        iconGold.position = CGPoint(x: (view.frame.width * 0.3 ), y: (view.frame.height * CGFloat(0.45) + 100))
+        iconGold.setScale(1)
+        addChild(iconGold)
+        
+        let iconSilver = SKSpriteNode(imageNamed: "silvermedal")
+        iconSilver.position = CGPoint(x: (view.frame.width * 0.3), y: (view.frame.height * CGFloat(0.30) + 100))
+        iconSilver.setScale(0.9)
+        addChild(iconSilver)
+        
+        let iconBronze = SKSpriteNode(imageNamed: "bronzemedal")
+        iconBronze.position = CGPoint(x: (view.frame.width * 0.3), y: (view.frame.height * CGFloat(0.15) + 100))
+        iconBronze.setScale(0.8)
+        addChild(iconBronze)
         
         
         //boton para volver al menu inicial

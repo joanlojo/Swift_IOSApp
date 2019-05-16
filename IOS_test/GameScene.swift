@@ -7,6 +7,8 @@
 //
 
 import SpriteKit
+import FirebaseAnalytics
+//import GoogleMobileAds
 
 protocol GameSceneDelegate: class {
     func back(sender: GameScene)
@@ -190,6 +192,9 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
         }
     }
     
+   // func goToNextLevel(){
+       // Analytics.logEvent("nextlevel", parameters: [:]) //cuando te pasas un nivel de dificultad
+    //}
     
     //enviar la carta para comprobar la logica y cambiar las texturas a corde con el estado de la carta
     func onTap(sender: CardSprite) {
@@ -252,12 +257,15 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
             let sequence = SKAction.sequence([
                 wait,
                 SKAction.run {
+                    Analytics.logEvent("levelPassed", parameters: [
+                        AnalyticsParameterItemName: "\(self.difficulty!))"]) //cuando te pasas un nivel de dificultad
                     self.gameSceneDelegate?.gameToResult(sender: self, points: self.gameLogic.points)
                 }
                 ])
             self.run(sequence)
         }
     }
+
     
     override func update(_ currentTime: TimeInterval) {
    
@@ -266,12 +274,14 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
         gameLogic.time = gameLogic.maxTime - (currentTime - gameLogic.initTime)
         timeLabel.text = "Time: " + String(Int(gameLogic.time))
         
-
+        //acabas la partida pero no la ganas
         if Int(gameLogic.time) <= 0{
             let wait = SKAction.wait(forDuration: 1)
             let sequence = SKAction.sequence([
                 wait,
                 SKAction.run {
+                    Analytics.logEvent("levelPassed", parameters: [
+                        AnalyticsParameterItemName: "\(self.difficulty!))"]) //cuando te pasas un nivel de dificultad
                     self.gameSceneDelegate?.gameToResult(sender: self, points: self.gameLogic.points)
                 }
                 ])

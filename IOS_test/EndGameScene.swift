@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import FirebaseAnalytics
 
 protocol EndGameDelegate: class {
     func resultToMenu(sender: EndGameScene)
@@ -37,6 +38,7 @@ class EndGameScene: SKScene, ButtonDelegate {
         highScore = defaults.integer(forKey: "Score")
         if pointsLastGame > highScore {
             defaults.set(pointsLastGame, forKey: "Score")
+            Analytics.logEvent("newHighScore", parameters: [:]) //cuando te haces un nuevo highscore
             highScore = pointsLastGame
         }
         self.highScoreLabel = SKLabelNode(text: "High Score: " + String(self.highScore))
