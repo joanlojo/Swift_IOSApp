@@ -38,7 +38,7 @@ class AudioController {
     }
     
     func on(){
-        player.volume = 1.0
+        player.volume = 0.8
     }
     
     func off(){
