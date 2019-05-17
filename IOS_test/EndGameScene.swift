@@ -40,6 +40,7 @@ class EndGameScene: SKScene, ButtonDelegate {
             defaults.set(pointsLastGame, forKey: "Score")
             Analytics.logEvent("newHighScore", parameters: [:]) //cuando te haces un nuevo highscore
             highScore = pointsLastGame
+            
         }
         self.highScoreLabel = SKLabelNode(text: "High Score: " + String(self.highScore))
         if let highScoreLabel = self.highScoreLabel {

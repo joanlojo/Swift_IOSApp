@@ -257,8 +257,7 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
             let sequence = SKAction.sequence([
                 wait,
                 SKAction.run {
-                    Analytics.logEvent("levelPassed", parameters: [
-                        AnalyticsParameterItemName: "\(self.difficulty!))"]) //cuando te pasas un nivel de dificultad
+                    Analytics.logEvent("levelPassed", parameters: [:]) //cuando te pasas un nivel de dificultad
                     self.gameSceneDelegate?.gameToResult(sender: self, points: self.gameLogic.points)
                 }
                 ])
@@ -280,8 +279,7 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
             let sequence = SKAction.sequence([
                 wait,
                 SKAction.run {
-                    Analytics.logEvent("levelPassed", parameters: [
-                        AnalyticsParameterItemName: "\(self.difficulty!))"]) //cuando te pasas un nivel de dificultad
+                    Analytics.logEvent("levelPassed", parameters: [:]) //cuando te pasas un nivel de dificultad
                     self.gameSceneDelegate?.gameToResult(sender: self, points: self.gameLogic.points)
                 }
                 ])

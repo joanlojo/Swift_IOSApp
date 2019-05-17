@@ -15,31 +15,9 @@ import GoogleMobileAds
 class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate, EndGameDelegate, OptionsDelegate, RankingDelegate {
 
 
-   /* var bannerView: GADBannerView!
+    var bannerView: GADBannerView!
     
-    func addBannerViewToView(_ bannerView: GADBannerView) {
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(bannerView)
-        view.addConstraints(
-            [NSLayoutConstraint(item: bannerView,
-                                attribute: .bottom,
-                                relatedBy: .equal,
-                                toItem: bottomLayoutGuide,
-                                attribute: .top,
-                                multiplier: 1,
-                                constant: 0),
-             NSLayoutConstraint(item: bannerView,
-                                attribute: .centerX,
-                                relatedBy: .equal,
-                                toItem: view,
-                                attribute: .centerX,
-                                multiplier: 1,
-                                constant: 0)
-            ])
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
-        bannerView.rootViewController = self
-        bannerView.load(GADRequest())
-    }*/
+
 
     
     func goToSettings(sender: MenuScene) {
@@ -57,9 +35,9 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
         super.viewDidLoad()
 
         // In this case, we instantiate the banner with desired ad size.
-        /*bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
         
-        addBannerViewToView(bannerView)*/
+        addBannerViewToView(bannerView)
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
@@ -102,7 +80,7 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
             let scene = GameScene(size: view.frame.size)
             scene.difficulty = difficulty
             scene.gameSceneDelegate = self
-            
+            addIsVisible(visibility: false)
             scene.backgroundColor = SKColor(named: "Fondo")!
             // Set the sca,le mode to scale to fit the window
             scene.scaleMode = .aspectFill
@@ -149,7 +127,9 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
             scene.menuSceneDelegate = self
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
-            
+            //addIsVisible(visibility: true)
+            addIsVisible(visibility: true)
+
             // Present the scene
             view.presentScene(scene, transition: .crossFade(withDuration: 0.2))
         }
@@ -160,7 +140,8 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
             scene.menuSceneDelegate = self
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
-            
+            addIsVisible(visibility: true)
+
             // Present the scene
             view.presentScene(scene, transition: .crossFade(withDuration: 0.2))
         }
@@ -171,7 +152,8 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
             scene.menuSceneDelegate = self
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
-            
+            addIsVisible(visibility: true)
+
             // Present the scene
             view.presentScene(scene, transition: .crossFade(withDuration: 0.2))
         }
@@ -182,10 +164,38 @@ class GameViewController: UIViewController, GameSceneDelegate, MenuSceneDelegate
             scene.menuSceneDelegate = self
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
-            
+            addIsVisible(visibility: true)
+
             // Present the scene
             view.presentScene(scene, transition: .crossFade(withDuration: 0.2))
         }
+    }
+    func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        view.addConstraints(
+            [NSLayoutConstraint(item: bannerView,
+                                attribute: .bottom,
+                                relatedBy: .equal,
+                                toItem: bottomLayoutGuide,
+                                attribute: .top,
+                                multiplier: 1,
+                                constant: 0),
+             NSLayoutConstraint(item: bannerView,
+                                attribute: .centerX,
+                                relatedBy: .equal,
+                                toItem: view,
+                                attribute: .centerX,
+                                multiplier: 1,
+                                constant: 0)
+            ])
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
+    }
+    
+    func addIsVisible(visibility : Bool){
+        bannerView.isHidden = !visibility
     }
     
     func gameToResult(sender: EndGameScene) {

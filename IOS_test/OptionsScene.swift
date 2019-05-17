@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import FirebaseAnalytics
 
 protocol OptionsDelegate: class {
     func optionsToMenu(sender: OptionsScene)
@@ -72,16 +73,14 @@ class OptionsScene: SKScene, ButtonDelegate{
             if AudioController.shared.soundPressed == false{
                 soundButton?.setImage(imageNamed: "mute", scale: 1.0)
                 AudioController.shared.off()
+                Analytics.logEvent("gameMuted", parameters: [:])
                 AudioController.shared.soundPressed = true
             }else if AudioController.shared.soundPressed == true{
                 soundButton?.setImage(imageNamed: "sound", scale: 1.0)
                 AudioController.shared.on()
+                Analytics.logEvent("gameWithSound", parameters: [:])
                 AudioController.shared.soundPressed = false
             }
-            
-           
-            
-            
         }
     }
 }
