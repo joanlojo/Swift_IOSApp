@@ -26,7 +26,7 @@ class OptionsScene: SKScene, ButtonDelegate{
     override func didMove(to view: SKView) {
         backgroundColor = SKColor(named: "Fondo")!
 
-        self.creditLabel = SKLabelNode(text: "   Game made by\nJoan Lopez Joaquin")
+        self.creditLabel = SKLabelNode(text: NSLocalizedString("   Game made by\nJoan Lopez Joaquin", comment: ""))
         if let creditLabel = self.creditLabel{
             creditLabel.fontColor = .red
             creditLabel.verticalAlignmentMode = .center

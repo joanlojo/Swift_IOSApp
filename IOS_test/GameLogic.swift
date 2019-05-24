@@ -56,10 +56,10 @@ class GameLogic {
             maxTime = 100
         }
         if difficulty == .medium{
-            maxTime = 120
+            maxTime = 200
         }
         if difficulty == .hard{
-            maxTime = 160
+            maxTime = 300
         }
     }
     
