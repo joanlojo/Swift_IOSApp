@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  IOS_test
+
+  Created by Programacion Moviles on 9/5/19.
+  Copyright © 2019 joan lopez joaquin. All rights reserved.
+*/
+"EASY" = "EASY";
+"MEDIUM" = "MEDIUM";
+"HARD" = "HARD";
+"Main Menu" = "Main Menu";
+"You have finished the game!" = "You have finished the game!";
+"Points" = "Points";
+

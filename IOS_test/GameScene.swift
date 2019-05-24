@@ -87,20 +87,20 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
         
         if difficulty == .easy{
             gameMode = SKLabelNode(fontNamed: "Futura")
-            gameMode.text = "EASY"
+            gameMode.text =  NSLocalizedString("EASY", comment: "")
             gameMode.fontColor = UIColor.black
             gameMode.fontSize = 20
             gameMode.position = CGPoint(x: 0.4 * (view.frame.width / 2), y: view.frame.height * 0.85)
             
         }else if difficulty == .medium{
             gameMode = SKLabelNode(fontNamed: "Futura")
-            gameMode.text = "MEDIUM"
+            gameMode.text = NSLocalizedString("MEDIUM", comment: "")
             gameMode.fontColor = UIColor.black
             gameMode.fontSize = 20
             gameMode.position = CGPoint(x: 0.4 * (view.frame.width / 2), y: view.frame.height * 0.85)
         }else if difficulty == .hard{
             gameMode = SKLabelNode(fontNamed: "Futura")
-            gameMode.text = "HARD"
+            gameMode.text = NSLocalizedString("HARD", comment: "")
             gameMode.fontColor = UIColor.black
             gameMode.fontSize = 20
             gameMode.position = CGPoint(x: 0.4 * (view.frame.width / 2), y: view.frame.height * 0.85)

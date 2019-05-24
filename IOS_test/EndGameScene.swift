@@ -52,7 +52,7 @@ class EndGameScene: SKScene, ButtonDelegate {
             addChild(highScoreLabel)
         }
         //mostar los puntos de la partida
-        self.points = SKLabelNode(text: "Points: " + String(pointsLastGame))
+        self.points = SKLabelNode(text: NSLocalizedString("Points: ", comment: "") + String(pointsLastGame))
         if let points = self.points {
             points.fontColor = .black
             points.verticalAlignmentMode = .center
@@ -64,7 +64,7 @@ class EndGameScene: SKScene, ButtonDelegate {
         //mostrar el high score, demomento no esta la logica
        
        
-        self.endGameLabel = SKLabelNode(text: "You have finished the game!")
+        self.endGameLabel = SKLabelNode(text: NSLocalizedString("You have finished the game!", comment: ""))
         if let endGameLabel = self.endGameLabel{
             endGameLabel.fontColor = .red
             endGameLabel.verticalAlignmentMode = .center
@@ -82,7 +82,7 @@ class EndGameScene: SKScene, ButtonDelegate {
             backButton.highlightColor = SKColor(named: "pressed")!
             backButton.delegate = self
             backButton.position = CGPoint(x: view.frame.width / 2.0 - backButton.frame.width/2, y: view.frame.height * 0.10)
-            backButton.setText(text: "Main Menu")
+            backButton.setText(text: NSLocalizedString("Main Menu", comment: ""))
             backButton.fillColor = SKColor(named: "notPressed")!
             addChild((backButton))
         }

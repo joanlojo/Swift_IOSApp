@@ -62,7 +62,7 @@ class MenuScene: SKScene, ButtonDelegate {
             easy.isUserInteractionEnabled = true
             easy.position = CGPoint(x:view.frame.width / 2.0 - easy.frame.width/2, y: view.frame.height / 2.0 - easy.frame.height/2)
             easy.delegate = self
-            easy.setText(text: "Easy")
+            easy.setText(text: NSLocalizedString("EASY", comment: ""))
             addChild(easy)
         }
         
@@ -74,7 +74,7 @@ class MenuScene: SKScene, ButtonDelegate {
             medium.isUserInteractionEnabled = true
             medium.position = CGPoint(x:view.frame.width / 2.0 - medium.frame.width/2, y: view.frame.height / 2.0 - medium.frame.height/2 - 100)
             medium.delegate = self
-            medium.setText(text: "Medium")
+            medium.setText(text: NSLocalizedString("MEDIUM", comment: ""))
             addChild(medium)
         }
         if let hard = hard{
@@ -85,7 +85,7 @@ class MenuScene: SKScene, ButtonDelegate {
             hard.isUserInteractionEnabled = true
             hard.position = CGPoint(x:view.frame.width / 2.0 - hard.frame.width/2, y: view.frame.height / 2.0 - hard.frame.height/2 - 200)
             hard.delegate = self
-            hard.setText(text: "Hard")
+            hard.setText(text: NSLocalizedString("HARD", comment: ""))
             addChild(hard)
         }
         if let options = options{
