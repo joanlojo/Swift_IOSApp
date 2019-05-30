@@ -199,17 +199,18 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
     //enviar la carta para comprobar la logica y cambiar las texturas a corde con el estado de la carta
     func onTap(sender: CardSprite) {
         if let card = sender.card{
-            if card.state != Card.CardState.destapada && card.state != Card.CardState.match{
+            if card.state != Card.CardState.destapada && card.state != Card.CardState.match && card.state == Card.CardState.tapada{
                 //cualquier carta que seleccionas la giras
                 card.state = Card.CardState.destapada
                 sender.changeTexture(texture: sender.textureFront)
                 //envias la carta que tocas
-                gameLogic.tryMatch(card: card)
+             
                 //secuencia para la animacion de la carta
-                let wait = SKAction.wait(forDuration: 0.5)
+                let wait = SKAction.wait(forDuration: 0.4)
                 let sequence = SKAction.sequence([
                     wait,
                     SKAction.run {
+                        self.gameLogic.tryMatch(card: card)
                          if card.state == Card.CardState.tapada{
                             sender.changeTexture(texture: sender.textureBack)
                             if !AudioController.shared.soundPressed{
@@ -217,7 +218,6 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
                             }else{
                                 SKAction.wait(forDuration: 0.0)
                             }
-
                             for i in 0..<self.cardSprite.count{
                                 if self.gameLogic.cardSelected?.ID == self.cardSprite[i].card?.ID{
                                     if self.gameLogic.cardSelected?.state == Card.CardState.tapada{
