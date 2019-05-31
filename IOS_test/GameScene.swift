@@ -37,7 +37,7 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
     var difficulty: Difficulty?
     
     override func didMove(to view: SKView) {
-     
+        
         
         //seleccionar las cartas para pasarlas a la funcion para asignarle la imagen
         if let difficulty = difficulty{
@@ -192,8 +192,8 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
         }
     }
     
-   // func goToNextLevel(){
-       // Analytics.logEvent("nextlevel", parameters: [:]) //cuando te pasas un nivel de dificultad
+    // func goToNextLevel(){
+    // Analytics.logEvent("nextlevel", parameters: [:]) //cuando te pasas un nivel de dificultad
     //}
     
     //enviar la carta para comprobar la logica y cambiar las texturas a corde con el estado de la carta
@@ -204,14 +204,15 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
                 card.state = Card.CardState.destapada
                 sender.changeTexture(texture: sender.textureFront)
                 //envias la carta que tocas
-             
+//                self.gameLogic.tryMatch(card: card)
+
                 //secuencia para la animacion de la carta
                 let wait = SKAction.wait(forDuration: 0.4)
                 let sequence = SKAction.sequence([
                     wait,
                     SKAction.run {
                         self.gameLogic.tryMatch(card: card)
-                         if card.state == Card.CardState.tapada{
+                        if card.state == Card.CardState.tapada{
                             sender.changeTexture(texture: sender.textureBack)
                             if !AudioController.shared.soundPressed{
                                 self.run(SKAction.playSoundFileNamed("Match_Incorrect.wav", waitForCompletion: false))
@@ -242,32 +243,47 @@ class GameScene: SKScene, CardSpriteDelegate, ButtonDelegate{
                                 }else{
                                     SKAction.wait(forDuration: 0.0)
                                 }
-
+                                
                             }
                         }
+                        //cargar la escena del final de la partida
+                        if self.gameLogic.checkGameState(cards: self.cardSprite){
+                            print("ganas")
+                            let wait = SKAction.wait(forDuration: 1)
+                            let sequence = SKAction.sequence([
+                                wait,
+                                SKAction.run {
+                                    Analytics.logEvent("levelPassed", parameters: [:]) //cuando te pasas un nivel de dificultad
+                                    self.gameSceneDelegate?.gameToResult(sender: self, points: self.gameLogic.points)
+                                }
+                                ])
+                            self.run(sequence)
+                        }
+
                     }
                     ])
-                self.run(sequence)              
+                self.run(sequence)
+            }
+        } else {
+            //cargar la escena del final de la partida
+            if gameLogic.checkGameState(cards: cardSprite){
+                print("ganas")
+                let wait = SKAction.wait(forDuration: 1)
+                let sequence = SKAction.sequence([
+                    wait,
+                    SKAction.run {
+                        Analytics.logEvent("levelPassed", parameters: [:]) //cuando te pasas un nivel de dificultad
+                        self.gameSceneDelegate?.gameToResult(sender: self, points: self.gameLogic.points)
+                    }
+                    ])
+                self.run(sequence)
             }
         }
-        //cargar la escena del final de la partida
-        if gameLogic.checkGameState(cards: cardSprite){
-            print("ganas")
-            let wait = SKAction.wait(forDuration: 1)
-            let sequence = SKAction.sequence([
-                wait,
-                SKAction.run {
-                    Analytics.logEvent("levelPassed", parameters: [:]) //cuando te pasas un nivel de dificultad
-                    self.gameSceneDelegate?.gameToResult(sender: self, points: self.gameLogic.points)
-                }
-                ])
-            self.run(sequence)
-        }
     }
-
+    
     
     override func update(_ currentTime: TimeInterval) {
-   
+        
         //calcular el cuenta atras del tiempo de la partida y mostrarlo
         gameLogic.getFirstTime(time: currentTime)
         gameLogic.time = gameLogic.maxTime - (currentTime - gameLogic.initTime)
